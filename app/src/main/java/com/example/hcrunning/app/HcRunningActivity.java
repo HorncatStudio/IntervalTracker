@@ -48,7 +48,7 @@ public class HcRunningActivity extends Activity {
     }
 
     public void startAndCancelToggleButton(View view) {
-      ToggleButton pauseContinueButtonActivator = (ToggleButton) findViewById(R.id.pauseContinue_ToggleButton);
+      ToggleButton pauseContinueButtonActivator = (ToggleButton) findViewById(R.id.pauseContinueToggleButton);
       boolean on = ((ToggleButton) view).isChecked();
       if (on) {
         //Cancel state
