@@ -16,22 +16,21 @@
         android:layout_height="wrap_content"
         android:text="Press Start"/>
 
-    <Button
-        android:id="@+id/start_activation_button"
+    <ToggleButton
+        android:id="@+id/startCancelToggleButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Start" />
+        android:textOn="Cancel"
+        android:textOff="Start"
+        android:onClick="startAndCancelToggleButton"/>
 
-    <Button
-        android:id="@+id/stop_activation_button"
+    <ToggleButton
+        android:id="@+id/pauseContinueToggleButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Stop" />
-
-    <Button
-        android:id="@+id/restart_activation_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Restart" />
+        android:textOn="Continue"
+        android:textOff="Pause"
+        android:onClick="pauseAndContinueToggleButton"
+        android:clickable="false" />
 
 </LinearLayout>
