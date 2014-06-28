@@ -31,6 +31,6 @@
         android:textOn="Continue"
         android:textOff="Pause"
         android:onClick="pauseAndContinueToggleButton"
-        android:clickable="false" />
+        android:enabled="false" />
 
 </LinearLayout>

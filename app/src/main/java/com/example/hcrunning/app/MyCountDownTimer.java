@@ -15,8 +15,8 @@ public class MyCountDownTimer extends CountDownTimer {
 
   public MyCountDownTimer(long millisInFuture, long countdownInterval, TextView timeTextView, Activity context) {
     super(millisInFuture, countdownInterval);
-    mTimeTextView = timeTextView;
-    mContext = context;
+    this.mTimeTextView = timeTextView;
+    this.mContext = context;
   }
 
   public long getCurrentTimeInSeconds() {
@@ -27,7 +27,8 @@ public class MyCountDownTimer extends CountDownTimer {
     return (currentMinute * 60) + currentSeconds;
   }
 
-  public void clearCurrrentTime(TextView currentTime) {
+  public void clearCurrentTime(TextView currentTime) {
+    currentTime.setText("");
     currentTime.append("Set time and press start!");
   }
 
