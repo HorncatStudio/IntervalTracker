@@ -5,6 +5,25 @@
     android:orientation="vertical"
     android:gravity="center">
 
+    <Button
+        android:id="@+id/addButton"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:onClick="onAddButton"
+        android:text="Add" />
+
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@android:id/empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#FF0000"
+        android:text="No data" />
+
     <NumberPicker
         android:id="@+id/numberPicker"
         android:layout_width="wrap_content"
@@ -14,7 +33,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Press Start"/>
+        android:text="Press Start" />
 
     <ToggleButton
         android:id="@+id/startCancelToggleButton"
@@ -22,7 +41,7 @@
         android:layout_height="wrap_content"
         android:textOn="Cancel"
         android:textOff="Start"
-        android:onClick="startAndCancelToggleButton"/>
+        android:onClick="onStartAndCancelToggleButton" />
 
     <ToggleButton
         android:id="@+id/pauseContinueToggleButton"
@@ -30,7 +49,7 @@
         android:layout_height="wrap_content"
         android:textOn="Continue"
         android:textOff="Pause"
-        android:onClick="pauseAndContinueToggleButton"
+        android:onClick="onPauseAndContinueToggleButton"
         android:enabled="false" />
 
 </LinearLayout>

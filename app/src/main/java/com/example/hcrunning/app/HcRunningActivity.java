@@ -23,12 +23,16 @@ public class HcRunningActivity extends Activity {
       this.mNumberPicker.setMinValue(1);
       this.mNumberPicker.setMaxValue(20);
       this.mNumberPicker.setWrapSelectorWheel(false);
-      this.mNumberPicker.setValue(10);
+      this.mNumberPicker.setValue(0);
 
       this.mCountDownTimer = new MyCountDownTimer(mNumberPicker.getValue() * 1000, 50, mCurrentTimeTextView, this);
     }
 
-    public void startAndCancelToggleButton(View view) {
+    public void onAddButton(View view){
+      //Number picker goes here?
+    }
+
+    public void onStartAndCancelToggleButton(View view) {
       ToggleButton pauseContinueButtonActivator = (ToggleButton) findViewById(R.id.pauseContinueToggleButton);
 
       boolean on = ((ToggleButton) view).isChecked();
@@ -44,7 +48,7 @@ public class HcRunningActivity extends Activity {
       }
     }
 
-    public void pauseAndContinueToggleButton(View view) {
+    public void onPauseAndContinueToggleButton(View view) {
       boolean on = ((ToggleButton) view).isChecked();
         if (!on) {
           //action when "Continue" is pressed
