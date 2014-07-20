@@ -10,7 +10,7 @@ import android.widget.ToggleButton;
 public class HcRunningActivity extends Activity {
     private TextView mCurrentTimeTextView;
     private MyCountDownTimer mCountDownTimer;
-    private NumberPicker mNumberPicker;
+    private MyNumberPicker myNumberPicker = new MyNumberPicker();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,17 +19,11 @@ public class HcRunningActivity extends Activity {
 
       this.mCurrentTimeTextView = (TextView) findViewById(R.id.textView);
 
-      this.mNumberPicker = (NumberPicker) findViewById(R.id.numberPicker);
-      this.mNumberPicker.setMinValue(1);
-      this.mNumberPicker.setMaxValue(20);
-      this.mNumberPicker.setWrapSelectorWheel(false);
-      this.mNumberPicker.setValue(0);
-
-      this.mCountDownTimer = new MyCountDownTimer(mNumberPicker.getValue() * 1000, 50, mCurrentTimeTextView, this);
+      this.mCountDownTimer = new MyCountDownTimer(myNumberPicker.getCurrentValue() * 1000, 50, mCurrentTimeTextView, this);
     }
 
     public void onAddButton(View view){
-      //Number picker goes here?
+        myNumberPicker.showNumberPicker();
     }
 
     public void onStartAndCancelToggleButton(View view) {
