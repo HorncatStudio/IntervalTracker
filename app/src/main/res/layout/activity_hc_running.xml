@@ -12,18 +12,18 @@
         android:onClick="onAddButton"
         android:text="Add" />
 
-    <ListView
-        android:id="@android:id/list"
-        android:layout_width="100dip"
-        android:layout_height="fill_parent"
-        android:layout_gravity="center"/>
+    <!--<ListView-->
+        <!--android:id="@android:id/list"-->
+        <!--android:layout_width="100dip"-->
+        <!--android:layout_height="fill_parent"-->
+        <!--android:layout_gravity="center"/>-->
 
-    <TextView
-        android:id="@android:id/empty"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#FF0000"
-        android:text="No data" />
+    <!--<TextView-->
+        <!--android:id="@android:id/empty"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="#FF0000"-->
+        <!--android:text="No data" />-->
 
     <TextView
         android:id="@+id/textView"

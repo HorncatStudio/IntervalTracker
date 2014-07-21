@@ -1,6 +1,7 @@
 package com.example.hcrunning.app;
 
 import android.app.Activity;
+import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.widget.TextView;
@@ -11,7 +12,7 @@ import android.widget.TextView;
 public class MyCountDownTimer extends CountDownTimer {
 
   private TextView mTimeTextView = null;
-  private Activity mContext = null;
+  private Context mContext = null;
 
   public MyCountDownTimer(long millisInFuture, long countdownInterval, TextView timeTextView, Activity context) {
     super(millisInFuture, countdownInterval);
