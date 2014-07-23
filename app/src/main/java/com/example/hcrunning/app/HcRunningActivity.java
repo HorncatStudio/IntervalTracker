@@ -13,8 +13,6 @@ import android.widget.ToggleButton;
 public class HcRunningActivity extends Activity implements NumberPicker.OnValueChangeListener{
     private TextView mCurrentTimeTextView;
     private MyCountDownTimer mCountDownTimer;
-    //private MyNumberPicker myNumberPicker = new MyNumberPicker();
-    public int pickedTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,8 +20,6 @@ public class HcRunningActivity extends Activity implements NumberPicker.OnValueC
       setContentView(R.layout.activity_hc_running);
 
       this.mCurrentTimeTextView = (TextView) findViewById(R.id.textView);
-
-      this.mCountDownTimer = new MyCountDownTimer(pickedTime * 1000, 50, mCurrentTimeTextView, this);
     }
 
     @Override
@@ -80,9 +76,12 @@ public class HcRunningActivity extends Activity implements NumberPicker.OnValueC
       onNumberPickerSetButton.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-          //mCurrentTimeTextView.setText(String.valueOf(numberPicker.getValue()));
-          //mCountDownTimer = new MyCountDownTimer(numberPicker.getValue() * 1000, 50, mCurrentTimeTextView, );
-          pickedTime = numberPicker.getValue();
+          mCountDownTimer = new MyCountDownTimer(numberPicker.getValue() * 1000, 50, mCurrentTimeTextView, getApplicationContext());
+
+          long minutesPart = numberPicker.getValue() / 60;
+          long secondsPart = numberPicker.getValue() % 60;
+          mCurrentTimeTextView.setText(Long.toString(minutesPart) + ":" + Long.toString(secondsPart));
+
           dialog.dismiss();
         }
       });
