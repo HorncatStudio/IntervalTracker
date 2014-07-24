@@ -12,12 +12,6 @@
         android:onClick="onAddButton"
         android:text="Add" />
 
-    <!--<ListView-->
-        <!--android:id="@android:id/list"-->
-        <!--android:layout_width="100dip"-->
-        <!--android:layout_height="fill_parent"-->
-        <!--android:layout_gravity="center"/>-->
-
     <!--<TextView-->
         <!--android:id="@android:id/empty"-->
         <!--android:layout_width="wrap_content"-->
@@ -29,23 +23,40 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Press Start" />
+        android:padding="12dp"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:text="Set the time and press start" />
 
-    <ToggleButton
-        android:id="@+id/startCancelToggleButton"
-        android:layout_width="wrap_content"
+    <LinearLayout
         android:layout_height="wrap_content"
-        android:textOn="Cancel"
-        android:textOff="Start"
-        android:onClick="onStartAndCancelToggleButton" />
+        android:layout_width="wrap_content">
 
-    <ToggleButton
-        android:id="@+id/pauseContinueToggleButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textOn="Continue"
-        android:textOff="Pause"
-        android:onClick="onPauseAndContinueToggleButton"
-        android:enabled="false" />
+        <ToggleButton
+            android:id="@+id/startCancelToggleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textOn="Cancel"
+            android:textOff="Start"
+            android:layout_margin="10dp"
+            android:onClick="onStartAndCancelToggleButton" />
+
+        <ToggleButton
+            android:id="@+id/pauseContinueToggleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textOn="Continue"
+            android:textOff="Pause"
+            android:onClick="onPauseAndContinueToggleButton"
+            android:layout_margin="10dp"
+            android:enabled="false" />
+
+     </LinearLayout>
+
+    <ListView
+            android:id="@+id/list"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"/>
 
 </LinearLayout>

@@ -8,12 +8,12 @@ import android.widget.TextView;
 /**
  * Created by Shinichi on 2014/06/13.
  */
-public class MyCountDownTimer extends CountDownTimer {
+public class HCRunningCountDownTimer extends CountDownTimer {
 
   private TextView mTimeTextView = null;
   private Context mContext = null;
 
-  public MyCountDownTimer(long millisInFuture, long countdownInterval, TextView timeTextView, Context context) {
+  public HCRunningCountDownTimer(long millisInFuture, long countdownInterval, TextView timeTextView, Context context) {
     super(millisInFuture, countdownInterval);
     this.mTimeTextView = timeTextView;
     this.mContext = context;
