@@ -1,15 +1,13 @@
 package com.example.hcrunning.app;
 
 import android.content.Context;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +16,7 @@ import java.util.List;
 public class HCRunningArrayAdapter extends ArrayAdapter<TextView> {
   // The resource ID of a Layout used for instantiating Views
   int resource;
-
+  //ArrayList<TextView> items;
 
     /**
      * Constructs this adapter
@@ -26,9 +24,10 @@ public class HCRunningArrayAdapter extends ArrayAdapter<TextView> {
      * @param _resource	The resource ID of a TextView to use when instantiating Views
      * @param _items	The actual objects we're representing
      */
-  public HCRunningArrayAdapter(Context _context, int _resource, List<TextView> _items) {
+  public HCRunningArrayAdapter(Context _context, int _resource, ArrayList<TextView> _items) {
     super(_context, _resource, _items);
     resource = _resource;
+    //items = _items;
   }
 
   /**
@@ -44,7 +43,10 @@ public class HCRunningArrayAdapter extends ArrayAdapter<TextView> {
   public View getView(int position, View convertView, ViewGroup parent) {
     LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(getContext().LAYOUT_INFLATER_SERVICE);
     View rowView = inflater.inflate(resource, parent, false);
-    TextView textView = getItem(position);
+
+    TextView timeTextView = (TextView) rowView.findViewById(R.id.time);
+    timeTextView.setText(getItem(position).getText().toString());
+
     return rowView;
   }
 }

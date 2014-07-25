@@ -6,9 +6,9 @@
               android:layout_height="match_parent">
 
     <TextureView
-              android:id="@+id/label"
+              android:id="@+id/time"
               android:layout_height="wrap_content"
               android:layout_width="wrap_content"
-              android:text="@+id/label" />
+              android:text="@+id/time" />
 
 </LinearLayout>
