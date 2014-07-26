@@ -5,10 +5,10 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <TextureView
+    <TextView
               android:id="@+id/time"
               android:layout_height="wrap_content"
               android:layout_width="wrap_content"
-              android:text="@+id/time" />
+              android:text="Time will be shown here" />
 
 </LinearLayout>

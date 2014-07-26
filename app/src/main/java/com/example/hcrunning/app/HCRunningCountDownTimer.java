@@ -5,6 +5,9 @@ import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Shinichi on 2014/06/13.
  */
@@ -12,11 +15,19 @@ public class HCRunningCountDownTimer extends CountDownTimer {
 
   private TextView mTimeTextView = null;
   private Context mContext = null;
+  private List<TimeInterval> mIntervals;
+  private HCRunningCountDownListener mListener;
 
-  public HCRunningCountDownTimer(long millisInFuture, long countdownInterval, TextView timeTextView, Context context) {
+  public HCRunningCountDownTimer(long millisInFuture, long countdownInterval, TextView timeTextView, Context context, HCRunningCountDownListener litener) {
     super(millisInFuture, countdownInterval);
     this.mTimeTextView = timeTextView;
     this.mContext = context;
+    this.mListener = litener;
+    this.mIntervals = new ArrayList<TimeInterval>();
+  }
+
+  void setTimes( List<TimeInterval> intervals ) {
+     this.mIntervals = intervals;
   }
 
   public long getCurrentTimeInSeconds() {
@@ -47,6 +58,8 @@ public class HCRunningCountDownTimer extends CountDownTimer {
     } catch (Exception e) {
       e.printStackTrace();
     }
+
+    this.mListener.onIntervalFinished();
   }
 
   @Override

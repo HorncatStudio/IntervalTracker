@@ -1,5 +1,6 @@
 package com.example.hcrunning.app;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,9 +15,8 @@ import java.util.List;
  * Created by Shinichi on 2014/07/24.
  */
 public class HCRunningArrayAdapter extends ArrayAdapter<TextView> {
-  // The resource ID of a Layout used for instantiating Views
-  int resource;
-  //ArrayList<TextView> items;
+  List<TimeInterval> mIntervals;
+  Activity mParentActivity;
 
     /**
      * Constructs this adapter
@@ -24,10 +24,10 @@ public class HCRunningArrayAdapter extends ArrayAdapter<TextView> {
      * @param _resource	The resource ID of a TextView to use when instantiating Views
      * @param _items	The actual objects we're representing
      */
-  public HCRunningArrayAdapter(Context _context, int _resource, ArrayList<TextView> _items) {
-    super(_context, _resource, _items);
-    resource = _resource;
-    //items = _items;
+  public HCRunningArrayAdapter(Context _context,  ArrayList<TextView> _items, Activity activity) {
+    super(_context, R.layout.rowlayout, _items);
+    mParentActivity = activity;
+    mIntervals = new ArrayList<TimeInterval>();
   }
 
   /**
@@ -42,11 +42,30 @@ public class HCRunningArrayAdapter extends ArrayAdapter<TextView> {
   @Override
   public View getView(int position, View convertView, ViewGroup parent) {
     LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(getContext().LAYOUT_INFLATER_SERVICE);
-    View rowView = inflater.inflate(resource, parent, false);
+    View rowView = inflater.inflate(R.layout.rowlayout, parent, false);
 
     TextView timeTextView = (TextView) rowView.findViewById(R.id.time);
-    timeTextView.setText(getItem(position).getText().toString());
+    TimeInterval time = mIntervals.get(position);
+    timeTextView.setText( time.toString() );
 
     return rowView;
+  }
+
+  public void add( long minutes, long seconds )
+  {
+    this.add(new TimeInterval(minutes, seconds) );
+  }
+
+  public void add( TimeInterval interval ) {
+    mIntervals.add( interval );
+
+    TextView textView = (TextView) mParentActivity.findViewById(R.id.textView);
+    textView.setText(interval.toString());
+    this.add(textView);
+  }
+
+
+  List<TimeInterval> getTimes() {
+    return mIntervals;
   }
 }
