@@ -12,22 +12,19 @@ import java.util.List;
  * Created by Shinichi on 2014/06/13.
  */
 public class HCRunningCountDownTimer extends CountDownTimer {
-
+  /** Members */
   private TextView mTimeTextView = null;
   private Context mContext = null;
-  private List<TimeInterval> mIntervals;
+  //private List<TimeInterval> mIntervals;
   private HCRunningCountDownListener mListener;
 
+  /** Constructor */
   public HCRunningCountDownTimer(long millisInFuture, long countdownInterval, TextView timeTextView, Context context, HCRunningCountDownListener litener) {
     super(millisInFuture, countdownInterval);
     this.mTimeTextView = timeTextView;
     this.mContext = context;
     this.mListener = litener;
-    this.mIntervals = new ArrayList<TimeInterval>();
-  }
-
-  void setTimes( List<TimeInterval> intervals ) {
-     this.mIntervals = intervals;
+    //this.mIntervals = new ArrayList<TimeInterval>();
   }
 
   public long getCurrentTimeInSeconds() {

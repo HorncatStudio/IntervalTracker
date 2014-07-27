@@ -15,17 +15,17 @@ import java.util.List;
  * Created by Shinichi on 2014/07/24.
  */
 public class HCRunningArrayAdapter extends ArrayAdapter<TextView> {
+  /** Members */
   List<TimeInterval> mIntervals;
   Activity mParentActivity;
 
-    /**
-     * Constructs this adapter
-     * @param _context	A context to create the Views in
-     * @param _resource	The resource ID of a TextView to use when instantiating Views
-     * @param _items	The actual objects we're representing
-     */
-  public HCRunningArrayAdapter(Context _context,  ArrayList<TextView> _items, Activity activity) {
-    super(_context, R.layout.rowlayout, _items);
+  /**
+   * Constructs this adapter
+   * @param context	A context to create the Views in
+   * @param items	The actual objects we're representing
+   */
+  public HCRunningArrayAdapter(Context context,  ArrayList<TextView> items, Activity activity) {
+    super(context, R.layout.rowlayout, items);
     mParentActivity = activity;
     mIntervals = new ArrayList<TimeInterval>();
   }
@@ -51,11 +51,16 @@ public class HCRunningArrayAdapter extends ArrayAdapter<TextView> {
     return rowView;
   }
 
-  public void add( long minutes, long seconds )
-  {
+  /** Function for convenience */
+  public void add( long minutes, long seconds ) {
     this.add(new TimeInterval(minutes, seconds) );
   }
 
+  /**
+   * This add() function does two things:
+   * (1) adds an interval to the list of TimeInterval,
+   * (2) puts the interval into textView and adds it to this adapter.
+   */
   public void add( TimeInterval interval ) {
     mIntervals.add( interval );
 

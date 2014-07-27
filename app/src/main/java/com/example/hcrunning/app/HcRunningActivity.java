@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HcRunningActivity extends Activity implements NumberPicker.OnValueChangeListener{
+    /** Members */
     private TextView mCurrentTimeTextView;
     private HCRunningCountDownTimer mCountDownTimer;
     private ListView mListView;
@@ -29,7 +30,6 @@ public class HcRunningActivity extends Activity implements NumberPicker.OnValueC
 
       mAdapter = new HCRunningArrayAdapter(this, mArrayList, this);
       mListView.setAdapter(mAdapter);
-
     }
 
     @Override
@@ -46,34 +46,31 @@ public class HcRunningActivity extends Activity implements NumberPicker.OnValueC
 
       boolean on = ((ToggleButton) view).isChecked();
       if (!on) {
-        //action when "Cancel" is pressed
+        // Action when "Cancel" is pressed
+
         pauseContinueButtonActivator.setEnabled(false);
         this.mCountDownTimer.cancel();
         this.mCountDownTimer.clearCurrentTime(this.mCurrentTimeTextView);
       } else {
-        //action when "Start" is pressed
+        // Action when "Start" is pressed
         pauseContinueButtonActivator.setEnabled(true);
-        //pull list of times to count down
-
+        /* pull list of times to count down
+         * foreach one in the list set the time on the count down timer
+         * ding at end, then pull do next time
+         */
         List<TimeInterval> intervals = mAdapter.getTimes();
         this.mProcessor.setIntervals(intervals);
         this.mProcessor.start();
-        //
-        // foreach one in the list set the time on the count down timer
-        // ding at end, then pull do next time
-
-        //this.mCountDownTimer.start();
       }
     }
 
     public void onPauseAndContinueToggleButton(View view) {
       boolean on = ((ToggleButton) view).isChecked();
         if (!on) {
-          //action when "Continue" is pressed
-          //this.mCountDownTimer = new HCRunningCountDownTimer(this.mCountDownTimer.getCurrentTimeInSeconds() * 1000, 50, mCurrentTimeTextView, this,);
+          // Action when "Continue" is pressed
           this.mCountDownTimer.start();
         } else {
-          //action when "Pause" is pressed
+          // Action when "Pause" is pressed
           this.mCountDownTimer.cancel();
         }
       }
@@ -95,9 +92,7 @@ public class HcRunningActivity extends Activity implements NumberPicker.OnValueC
       onNumberPickerSetButton.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-          //mCountDownTimer = new HCRunningCountDownTimer(numberPicker.getValue() * 1000, 50, mCurrentTimeTextView, getApplicationContext());
-
-          // To check if timer is correctly showing
+          // Separate picked time from number picker into minutes-part and seconds-part
           long minutesPart = numberPicker.getValue() / 60;
           long secondsPart = numberPicker.getValue() % 60;
 
