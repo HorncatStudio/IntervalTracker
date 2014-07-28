@@ -15,7 +15,6 @@ import java.util.List;
  * Created by Shinichi on 2014/07/24.
  */
 public class HCRunningArrayAdapter extends ArrayAdapter<TextView> {
-  /** Members */
   List<TimeInterval> mIntervals;
   Activity mParentActivity;
 
@@ -51,6 +50,7 @@ public class HCRunningArrayAdapter extends ArrayAdapter<TextView> {
     return rowView;
   }
 
+
   /** Function for convenience */
   public void add( long minutes, long seconds ) {
     this.add(new TimeInterval(minutes, seconds) );
@@ -69,8 +69,11 @@ public class HCRunningArrayAdapter extends ArrayAdapter<TextView> {
     this.add(textView);
   }
 
-
-  List<TimeInterval> getTimes() {
+  public List<TimeInterval> getTimes() {
     return mIntervals;
+  }
+
+  public void clearListItem() {
+    mIntervals.clear();
   }
 }

@@ -44,13 +44,15 @@ public class HcRunningActivity extends Activity implements NumberPicker.OnValueC
     public void onStartAndCancelToggleButton(View view) {
       ToggleButton pauseContinueButtonActivator = (ToggleButton) findViewById(R.id.pauseContinueToggleButton);
 
-      boolean on = ((ToggleButton) view).isChecked();
-      if (!on) {
+      boolean onStart = ((ToggleButton) view).isChecked();
+      if (!onStart) {
         // Action when "Cancel" is pressed
-
         pauseContinueButtonActivator.setEnabled(false);
-        this.mCountDownTimer.cancel();
-        this.mCountDownTimer.clearCurrentTime(this.mCurrentTimeTextView);
+//        this.mCountDownTimer.cancel();
+//        this.mCountDownTimer.clearCurrentTime(this.mCurrentTimeTextView);
+        this.mProcessor.cancel();
+        this.mAdapter.clearListItem();
+        this.mListView.setAdapter(null);
       } else {
         // Action when "Start" is pressed
         pauseContinueButtonActivator.setEnabled(true);
@@ -65,13 +67,13 @@ public class HcRunningActivity extends Activity implements NumberPicker.OnValueC
     }
 
     public void onPauseAndContinueToggleButton(View view) {
-      boolean on = ((ToggleButton) view).isChecked();
-        if (!on) {
+      boolean onPause = ((ToggleButton) view).isChecked();
+        if (!onPause) {
           // Action when "Continue" is pressed
-          this.mCountDownTimer.start();
+          this.mProcessor.start();
         } else {
           // Action when "Pause" is pressed
-          this.mCountDownTimer.cancel();
+          this.mProcessor.pause();
         }
       }
 
@@ -81,10 +83,10 @@ public class HcRunningActivity extends Activity implements NumberPicker.OnValueC
       dialog.setContentView(R.layout.dialog);
 
       final NumberPicker numberPicker = (NumberPicker) dialog.findViewById(R.id.numberPicker);
-      numberPicker.setMaxValue(20);
+      numberPicker.setMaxValue(600);
       numberPicker.setMinValue(1);
       numberPicker.setOnValueChangedListener(this);
-      numberPicker.setWrapSelectorWheel(false);
+      numberPicker.setWrapSelectorWheel(true);
 
       Button onNumberPickerSetButton = (Button) dialog.findViewById(R.id.buttonSet);
       Button onNumberPickerCancelButton = (Button) dialog.findViewById(R.id.buttonCancel);

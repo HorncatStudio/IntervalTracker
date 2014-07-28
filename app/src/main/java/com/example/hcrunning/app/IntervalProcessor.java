@@ -31,7 +31,7 @@ public class IntervalProcessor implements HCRunningCountDownListener {
    * (3) initializes the index for the next time this function called
    */
   public void setIntervals(List<TimeInterval> timeIntervalList) {
-    mCountDownTimerList.clear();
+    this.mCountDownTimerList.clear();
 
     if( timeIntervalList.isEmpty() )
       return;
@@ -62,25 +62,66 @@ public class IntervalProcessor implements HCRunningCountDownListener {
   }
 
   /**
-   * When paused...
+   * pause() does four things:
+   * (1) cancels the timer,
+   * (2) takes the paused time,
+   * (3) creates new timer which replaces old one, and
+   * (4) adds it to the count down timer list.
+   * If count down timer list is empty, this returns without further operations.
    */
-  public void pause() {}
+  public void pause() {
+    if( this.mCountDownTimerList.isEmpty() )
+      return;
+
+    HCRunningCountDownTimer pausedTimer = this.mCountDownTimerList.get(this.mCurrentIndex);
+    pausedTimer.cancel();
+
+    String pausedTime = this.mDisplayCountDownView.getText().toString();
+    String[] pausedSplitTime = pausedTime.split(":", 0);
+    long pausedTimeMinute = Long.parseLong(pausedSplitTime[0]);
+    long pausedTimeSeconds = Long.parseLong(pausedSplitTime[1]);
+    long totalInMilliSeconds = (pausedTimeMinute * 60) + pausedTimeSeconds;
+
+    HCRunningCountDownTimer replacingTimer = new HCRunningCountDownTimer(totalInMilliSeconds, 50, mDisplayCountDownView, mContext, this);
+
+    this.mCountDownTimerList.set(this.mCurrentIndex, replacingTimer);
+  }
 
   /**
-   * When canceled...
+   * cancel() does three things:
+   * (1) stops the timer,
+   * (2) clears the list of count down timer, and
+   * (3) resets the text.
+   * If count down timer list is empty then resets text and returns without further operations.
    */
-  public void cancel() {}
+  public void cancel() {
+    if( this.mCountDownTimerList.isEmpty() ) {
+      this.mDisplayCountDownView.setText("");
+      this.mDisplayCountDownView.append("Set time and press start!");
+      return;
+    }
+
+    HCRunningCountDownTimer timer = this.mCountDownTimerList.get(this.mCurrentIndex);
+    timer.cancel();
+
+    this.mCountDownTimerList.clear();
+
+    this.mDisplayCountDownView.setText("");
+    this.mDisplayCountDownView.append("Set time and press start!");
+  }
 
   /**
    * onIntervalFinished() does two things:
    * (1) increments current index; if current index reaches to the end of the list of count down timer,
-   *     then this function returns without further operations
+   *     then this function clears the list and returns without further operations
    * (2) sets the next interval and starts it
    */
   public void onIntervalFinished() {
     this.mCurrentIndex++;
-    if( this.mCurrentIndex == this.mCountDownTimerList.size() )
+    if( this.mCurrentIndex == this.mCountDownTimerList.size() ) {
+      this.mCountDownTimerList.clear();
       return;
+    }
 
     HCRunningCountDownTimer nextTime = this.mCountDownTimerList.get(this.mCurrentIndex);
     nextTime.start();
