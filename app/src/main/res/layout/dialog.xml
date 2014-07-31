@@ -1,37 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:shrinkColumns="*"
+                android:stretchColumns="*"
+                android:background="#FFFFFF">
 
-    <NumberPicker
-            android:id="@+id/numberPicker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="64dp" />
+    <TableRow
+        android:id="@+id/tableRowForNumberPickers"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent" >
 
-    <Button
-            android:id="@+id/buttonCancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/numberPicker"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="98dp"
-            android:layout_toRightOf="@+id/numberPicker"
-            android:text="Cancel"
-            android:onClick="onNumberPickerCancelButton"/>
+        <NumberPicker
+                android:id="@+id/numberPickerMinutes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="64dp" />
 
-    <Button
-            android:id="@+id/buttonSet"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/buttonCancel"
-            android:layout_alignBottom="@+id/buttonCancel"
-            android:layout_marginRight="16dp"
-            android:layout_toLeftOf="@+id/numberPicker"
-            android:text="Set"
-            android:onClick="onNumberPickerSetButton"/>
+        <NumberPicker
+                android:id="@+id/numberPickerSeconds"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="64dp" />
+    </TableRow>
 
-</RelativeLayout>
+    <TableRow
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="100dp">
+
+        <Button
+                android:id="@+id/buttonSet"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:text="Set"
+                android:onClick="onNumberPickerSetButton"/>
+
+        <Button
+                android:id="@+id/buttonCancel"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:text="Cancel"
+                android:onClick="onNumberPickerCancelButton"/>
+
+    ></TableRow>
+
+</TableLayout>

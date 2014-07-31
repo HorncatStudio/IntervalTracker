@@ -80,7 +80,7 @@ public class IntervalProcessor implements HCRunningCountDownListener {
     String[] pausedSplitTime = pausedTime.split(":", 0);
     long pausedTimeMinute = Long.parseLong(pausedSplitTime[0]);
     long pausedTimeSeconds = Long.parseLong(pausedSplitTime[1]);
-    long totalInMilliSeconds = (pausedTimeMinute * 60) + pausedTimeSeconds;
+    long totalInMilliSeconds = ((pausedTimeMinute * 60) + pausedTimeSeconds) * 1000;
 
     HCRunningCountDownTimer replacingTimer = new HCRunningCountDownTimer(totalInMilliSeconds, 50, mDisplayCountDownView, mContext, this);
 

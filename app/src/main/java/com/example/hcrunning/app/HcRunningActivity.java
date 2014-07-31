@@ -13,11 +13,11 @@ import java.util.List;
 public class HcRunningActivity extends Activity implements NumberPicker.OnValueChangeListener{
     /** Members */
     private TextView mCurrentTimeTextView;
-    private HCRunningCountDownTimer mCountDownTimer;
     private ListView mListView;
     private ArrayList<TextView> mArrayList = new ArrayList<TextView>();
     private HCRunningArrayAdapter mAdapter;
     private IntervalProcessor mProcessor;
+    private List<TimeInterval> mIntervals;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,32 +43,34 @@ public class HcRunningActivity extends Activity implements NumberPicker.OnValueC
 
     public void onStartAndCancelToggleButton(View view) {
       ToggleButton pauseContinueButtonActivator = (ToggleButton) findViewById(R.id.pauseContinueToggleButton);
+      Button addButtonActivator = (Button) findViewById(R.id.addButton);
 
-      boolean onStart = ((ToggleButton) view).isChecked();
-      if (!onStart) {
+      boolean start = ((ToggleButton) view).isChecked();
+      if (!start) {
         // Action when "Cancel" is pressed
         pauseContinueButtonActivator.setEnabled(false);
-//        this.mCountDownTimer.cancel();
-//        this.mCountDownTimer.clearCurrentTime(this.mCurrentTimeTextView);
+        addButtonActivator.setEnabled(true);
         this.mProcessor.cancel();
         this.mAdapter.clear();
         this.mAdapter.notifyDataSetChanged();
+        this.mIntervals.clear();
       } else {
         // Action when "Start" is pressed
         pauseContinueButtonActivator.setEnabled(true);
+        addButtonActivator.setEnabled(false);
         /* pull list of times to count down
          * foreach one in the list set the time on the count down timer
          * ding at end, then pull do next time
          */
-        List<TimeInterval> intervals = mAdapter.getTimes();
-        this.mProcessor.setIntervals(intervals);
+        this.mIntervals = mAdapter.getTimes();
+        this.mProcessor.setIntervals(mIntervals);
         this.mProcessor.start();
       }
     }
 
     public void onPauseAndContinueToggleButton(View view) {
-      boolean onPause = ((ToggleButton) view).isChecked();
-        if (!onPause) {
+      boolean pause = ((ToggleButton) view).isChecked();
+        if (!pause) {
           // Action when "Continue" is pressed
           this.mProcessor.start();
         } else {
@@ -82,11 +84,17 @@ public class HcRunningActivity extends Activity implements NumberPicker.OnValueC
       dialog.setTitle("Set Timer");
       dialog.setContentView(R.layout.dialog);
 
-      final NumberPicker numberPicker = (NumberPicker) dialog.findViewById(R.id.numberPicker);
-      numberPicker.setMaxValue(600);
-      numberPicker.setMinValue(1);
-      numberPicker.setOnValueChangedListener(this);
-      numberPicker.setWrapSelectorWheel(true);
+      final NumberPicker numberPickerForMinutes = (NumberPicker) dialog.findViewById(R.id.numberPickerMinutes);
+      numberPickerForMinutes.setMaxValue(59);
+      numberPickerForMinutes.setMinValue(0);
+      numberPickerForMinutes.setOnValueChangedListener(this);
+      numberPickerForMinutes.setWrapSelectorWheel(true);
+
+      final NumberPicker numberPickerForSeconds = (NumberPicker) dialog.findViewById(R.id.numberPickerSeconds);
+      numberPickerForSeconds.setMaxValue(59);
+      numberPickerForSeconds.setMinValue(0);
+      numberPickerForSeconds.setOnValueChangedListener(this);
+      numberPickerForSeconds.setWrapSelectorWheel(true);
 
       Button onNumberPickerSetButton = (Button) dialog.findViewById(R.id.buttonSet);
       Button onNumberPickerCancelButton = (Button) dialog.findViewById(R.id.buttonCancel);
@@ -94,9 +102,8 @@ public class HcRunningActivity extends Activity implements NumberPicker.OnValueC
       onNumberPickerSetButton.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-          // Separate picked time from number picker into minutes-part and seconds-part
-          long minutesPart = numberPicker.getValue() / 60;
-          long secondsPart = numberPicker.getValue() % 60;
+          long minutesPart = numberPickerForMinutes.getValue();
+          long secondsPart = numberPickerForSeconds.getValue();
 
           TimeInterval interval = new TimeInterval(minutesPart, secondsPart);
           mCurrentTimeTextView.setText(interval.toString());
