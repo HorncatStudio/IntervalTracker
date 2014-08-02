@@ -53,7 +53,7 @@ public class HcRunningActivity extends Activity implements NumberPicker.OnValueC
         this.mProcessor.cancel();
         this.mAdapter.clear();
         this.mAdapter.notifyDataSetChanged();
-        this.mIntervals.clear();
+        this.mIntervals.clear();         // or this.mAdapter.clearListItem();
       } else {
         // Action when "Start" is pressed
         pauseContinueButtonActivator.setEnabled(true);
