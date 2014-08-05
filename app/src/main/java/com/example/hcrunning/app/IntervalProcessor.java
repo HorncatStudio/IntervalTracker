@@ -62,6 +62,20 @@ public class IntervalProcessor implements HCRunningCountDownListener {
   }
 
   /**
+   * stop() stops the timer, also checks if list of count down timer is empty or not.
+   * If empty it returns without further operation. Also initialized the current index.
+   */
+  public void stop() {
+    if( this.mCountDownTimerList.isEmpty() )
+      return;
+
+    HCRunningCountDownTimer stoppedTimer = this.mCountDownTimerList.get(this.mCurrentIndex);
+    stoppedTimer.cancel();
+
+    this.mCurrentIndex = 0;
+  }
+
+  /**
    * pause() does four things:
    * (1) cancels the timer,
    * (2) takes the paused time,

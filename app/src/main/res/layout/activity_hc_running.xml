@@ -5,19 +5,45 @@
     android:orientation="vertical"
     android:gravity="center">
 
+    <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content">
+
+        <ToggleButton
+                android:id="@+id/startCancelToggleButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textOn="Cancel"
+                android:textOff="Start"
+                android:layout_margin="10dp"
+                android:onClick="onStartAndCancelToggleButton" />
+
+        <ToggleButton
+                android:id="@+id/pauseContinueToggleButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textOn="Continue"
+                android:textOff="Pause"
+                android:onClick="onPauseAndContinueToggleButton"
+                android:layout_margin="10dp"
+                android:enabled="false" />
+
+        <Button
+                android:id="@+id/resetButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reset"
+                android:onClick="onResetButton"
+                android:layout_margin="10dp"/>
+
+    </LinearLayout>
+
     <Button
         android:id="@+id/addButton"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:onClick="onAddButton"
         android:text="Add" />
-
-    <!--<TextView-->
-        <!--android:id="@android:id/empty"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:background="#FF0000"-->
-        <!--android:text="No data" />-->
 
     <TextView
         android:id="@+id/textView"
@@ -28,35 +54,12 @@
         android:textStyle="bold"
         android:text="Set the time and press start" />
 
-    <LinearLayout
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content">
 
-        <ToggleButton
-            android:id="@+id/startCancelToggleButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textOn="Cancel"
-            android:textOff="Start"
-            android:layout_margin="10dp"
-            android:onClick="onStartAndCancelToggleButton" />
-
-        <ToggleButton
-            android:id="@+id/pauseContinueToggleButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textOn="Continue"
-            android:textOff="Pause"
-            android:onClick="onPauseAndContinueToggleButton"
-            android:layout_margin="10dp"
-            android:enabled="false" />
-
-     </LinearLayout>
 
     <ListView
             android:id="@+id/list"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"/>
 
 </LinearLayout>

@@ -24,7 +24,7 @@ public class HCRunningArrayAdapter extends ArrayAdapter<TextView> {
    * @param items	The actual objects we're representing
    */
   public HCRunningArrayAdapter(Context context,  ArrayList<TextView> items, Activity activity) {
-    super(context, R.layout.rowlayout, items);
+    super(context, R.layout.row_layout_for_listview, items);
     mParentActivity = activity;
     mIntervals = new ArrayList<TimeInterval>();
   }
@@ -41,7 +41,7 @@ public class HCRunningArrayAdapter extends ArrayAdapter<TextView> {
   @Override
   public View getView(int position, View convertView, ViewGroup parent) {
     LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(getContext().LAYOUT_INFLATER_SERVICE);
-    View rowView = inflater.inflate(R.layout.rowlayout, parent, false);
+    View rowView = inflater.inflate(R.layout.row_layout_for_listview, parent, false);
 
     TextView timeTextView = (TextView) rowView.findViewById(R.id.time);
     TimeInterval time = mIntervals.get(position);

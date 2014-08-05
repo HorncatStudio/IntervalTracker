@@ -50,10 +50,10 @@ public class HcRunningActivity extends Activity implements NumberPicker.OnValueC
         // Action when "Cancel" is pressed
         pauseContinueButtonActivator.setEnabled(false);
         addButtonActivator.setEnabled(true);
-        this.mProcessor.cancel();
-        this.mAdapter.clear();
-        this.mAdapter.notifyDataSetChanged();
-        this.mIntervals.clear();         // or this.mAdapter.clearListItem();
+        this.mProcessor.stop();
+//        this.mAdapter.clear();
+//        this.mAdapter.notifyDataSetChanged();
+//        this.mIntervals.clear();         // or this.mAdapter.clearListItem();
       } else {
         // Action when "Start" is pressed
         pauseContinueButtonActivator.setEnabled(true);
@@ -79,6 +79,13 @@ public class HcRunningActivity extends Activity implements NumberPicker.OnValueC
         }
       }
 
+    public void onResetButton(View view) {
+      this.mProcessor.cancel();
+      this.mAdapter.clear();
+      this.mAdapter.notifyDataSetChanged();
+      this.mIntervals.clear();         // or this.mAdapter.clearListItem();
+    }
+
     public void showNumberPicker() {
       final Dialog dialog = new Dialog(HcRunningActivity.this);
       dialog.setTitle("Set Timer");
@@ -91,10 +98,17 @@ public class HcRunningActivity extends Activity implements NumberPicker.OnValueC
       numberPickerForMinutes.setWrapSelectorWheel(true);
 
       final NumberPicker numberPickerForSeconds = (NumberPicker) dialog.findViewById(R.id.numberPickerSeconds);
-      numberPickerForSeconds.setMaxValue(59);
+      numberPickerForSeconds.setMaxValue(55);
       numberPickerForSeconds.setMinValue(0);
       numberPickerForSeconds.setOnValueChangedListener(this);
       numberPickerForSeconds.setWrapSelectorWheel(true);
+      // Setting 5 seconds incrementation below
+      String[] stringArray = new String[11];  // 5 * 11 = 55
+      for (int i = 0; i < stringArray.length; i++) {
+        stringArray[i] = Integer.toString(i * 5);
+      }
+      numberPickerForSeconds.setDisplayedValues(stringArray);
+
 
       Button onNumberPickerSetButton = (Button) dialog.findViewById(R.id.buttonSet);
       Button onNumberPickerCancelButton = (Button) dialog.findViewById(R.id.buttonCancel);
