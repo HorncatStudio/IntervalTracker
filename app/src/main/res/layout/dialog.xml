@@ -8,6 +8,27 @@
                 android:background="#FFFFFF">
 
     <TableRow
+            android:layout_marginBottom="-60dp"
+            android:layout_marginTop="40dp">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Minutes"
+                android:textStyle="bold"
+                android:textSize="25dp"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Seconds"
+                android:textStyle="bold"
+                android:textSize="25dp"/>
+
+    </TableRow>
+
+    <TableRow
         android:id="@+id/tableRowForNumberPickers"
         android:layout_height="wrap_content"
         android:layout_width="match_parent" >
@@ -23,6 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="64dp" />
+
     </TableRow>
 
     <TableRow
