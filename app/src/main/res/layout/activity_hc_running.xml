@@ -3,47 +3,60 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center">
+    android:background="@android:color/background_dark"
+    android:baselineAligned="false">
 
-    <LinearLayout
+    <TableLayout
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content">
+            android:layout_width="fill_parent"
+            android:weightSum="1"
+            android:stretchColumns="*">
 
-        <ToggleButton
-                android:id="@+id/startCancelToggleButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textOn="Cancel"
-                android:textOff="Start"
-                android:layout_margin="10dp"
-                android:onClick="onStartAndCancelToggleButton" />
+        <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+            <ToggleButton
+                    android:id="@+id/startCancelToggleButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textOn="Cancel"
+                    android:textOff="Start"
+                    android:layout_margin="10dp"
+                    android:onClick="onStartAndCancelToggleButton"
+                    android:background="@android:color/holo_green_dark"/>
 
-        <ToggleButton
-                android:id="@+id/pauseContinueToggleButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textOn="Continue"
-                android:textOff="Pause"
-                android:onClick="onPauseAndContinueToggleButton"
-                android:layout_margin="10dp"
-                android:enabled="false" />
+            <ToggleButton
+                    android:id="@+id/pauseContinueToggleButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textOn="Continue"
+                    android:textOff="Pause"
+                    android:onClick="onPauseAndContinueToggleButton"
+                    android:layout_margin="10dp"
+                    android:enabled="false"
+                    android:background="@android:color/holo_blue_bright"/>
 
-        <Button
-                android:id="@+id/resetButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Reset"
-                android:onClick="onResetButton"
-                android:layout_margin="10dp"/>
+            <Button
+                    android:id="@+id/resetButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Reset"
+                    android:onClick="onResetButton"
+                    android:layout_margin="10dp"
+                    android:background="@android:color/holo_orange_dark"/>
 
-    </LinearLayout>
+        </TableRow>
+
+    </TableLayout>
 
     <Button
         android:id="@+id/addButton"
         android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:onClick="onAddButton"
-        android:text="Add" />
+        android:text="Add" android:background="#ff3c150e" android:textColor="#fff7fbf2"
+        android:textStyle="bold" android:longClickable="false"
+            />
 
     <TextView
         android:id="@+id/textView"
@@ -52,9 +65,8 @@
         android:padding="12dp"
         android:textSize="25dp"
         android:textStyle="bold"
-        android:text="Set the time and press start" />
-
-
+        android:text="Set the time and press start" android:textColor="#fff7fbf2"
+        android:layout_gravity="center_horizontal"/>
 
     <ListView
             android:id="@+id/list"

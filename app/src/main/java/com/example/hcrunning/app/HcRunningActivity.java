@@ -10,7 +10,7 @@ import android.widget.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HcRunningActivity extends Activity implements NumberPicker.OnValueChangeListener{
+public class HCRunningActivity extends Activity {
     /** Members */
     private TextView mCurrentTimeTextView;
     private ListView mListView;
@@ -30,11 +30,14 @@ public class HcRunningActivity extends Activity implements NumberPicker.OnValueC
 
       mAdapter = new HCRunningArrayAdapter(this, mArrayList, this);
       mListView.setAdapter(mAdapter);
-    }
+      mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+           TextView oldValue = mAdapter.getItem(position);
 
-    @Override
-    public void onValueChange(NumberPicker numberPicker, int oldVal, int newVal) {
-      Log.i("Value is ", "" + newVal);
+           updateFromNumberPicker(oldValue, position);
+        }
+      });
     }
 
     public void onAddButton(View view){
@@ -87,28 +90,10 @@ public class HcRunningActivity extends Activity implements NumberPicker.OnValueC
     }
 
     public void showNumberPicker() {
-      final Dialog dialog = new Dialog(HcRunningActivity.this);
-      dialog.setTitle("Set Timer");
-      dialog.setContentView(R.layout.dialog);
+      final Dialog dialog = createNumberPickerDialog();
 
       final NumberPicker numberPickerForMinutes = (NumberPicker) dialog.findViewById(R.id.numberPickerMinutes);
-      numberPickerForMinutes.setMaxValue(59);
-      numberPickerForMinutes.setMinValue(0);
-      numberPickerForMinutes.setOnValueChangedListener(this);
-      numberPickerForMinutes.setWrapSelectorWheel(true);
-
       final NumberPicker numberPickerForSeconds = (NumberPicker) dialog.findViewById(R.id.numberPickerSeconds);
-      numberPickerForSeconds.setMaxValue(55);
-      numberPickerForSeconds.setMinValue(0);
-      numberPickerForSeconds.setOnValueChangedListener(this);
-      numberPickerForSeconds.setWrapSelectorWheel(true);
-      // Setting 5 seconds incrementation below
-      String[] stringArray = new String[11];  // 5 * 11 = 55
-      for (int i = 0; i < stringArray.length; i++) {
-        stringArray[i] = Integer.toString(i * 5);
-      }
-      numberPickerForSeconds.setDisplayedValues(stringArray);
-
 
       Button onNumberPickerSetButton = (Button) dialog.findViewById(R.id.buttonSet);
       Button onNumberPickerCancelButton = (Button) dialog.findViewById(R.id.buttonCancel);
@@ -137,4 +122,79 @@ public class HcRunningActivity extends Activity implements NumberPicker.OnValueC
       dialog.show();
     }
 
+  public void updateFromNumberPicker( final TextView textViewInterval, final int positionInAdapter ) {
+    final Dialog dialog = createNumberPickerDialog();
+
+    TimeInterval interval = HCRunningToolkit.getTimeInterval(textViewInterval);
+    final NumberPicker numberPickerForMinutes = (NumberPicker) dialog.findViewById(R.id.numberPickerMinutes);
+    numberPickerForMinutes.setValue((int) (interval.Minutes));
+
+    final NumberPicker numberPickerForSeconds = (NumberPicker) dialog.findViewById(R.id.numberPickerSeconds);
+    numberPickerForSeconds.setValue((int)(interval.Seconds));
+
+    Button onNumberPickerSetButton = (Button) dialog.findViewById(R.id.buttonSet);
+    Button onNumberPickerCancelButton = (Button) dialog.findViewById(R.id.buttonCancel);
+
+    onNumberPickerSetButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        long minutesPart = numberPickerForMinutes.getValue();
+        long secondsPart = numberPickerForSeconds.getValue();
+
+        TimeInterval updatedInterval = new TimeInterval(minutesPart, secondsPart);
+        updateInterval(updatedInterval, positionInAdapter);
+        dialog.dismiss();
+      }
+    });
+
+    onNumberPickerCancelButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        dialog.dismiss();
+      }
+    });
+
+    dialog.show();
+  }
+
+  private void updateInterval( TimeInterval newInterval, int position ) {
+    this.mAdapter.replace(position, newInterval);
+  }
+
+  private Dialog createNumberPickerDialog() {
+    final Dialog dialog = new Dialog(HCRunningActivity.this);
+    dialog.setTitle("Set Timer");
+    dialog.setContentView(R.layout.dialog);
+
+    final NumberPicker numberPickerForMinutes = (NumberPicker) dialog.findViewById(R.id.numberPickerMinutes);
+    numberPickerForMinutes.setMaxValue(59);
+    numberPickerForMinutes.setMinValue(0);
+//    numberPickerForMinutes.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+//      @Override
+//      public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+//        picker.setValue((newVal < oldVal) ? (oldVal -1) : (oldVal + 1));
+//      }
+//    });
+    numberPickerForMinutes.setWrapSelectorWheel(true);
+
+    final NumberPicker numberPickerForSeconds = (NumberPicker) dialog.findViewById(R.id.numberPickerSeconds);
+    numberPickerForSeconds.setMaxValue(59);
+    numberPickerForSeconds.setMinValue(0);
+//    final String[] seconds = new String[11];
+//    for (int i = 0; i < seconds.length; i++) {
+//      String number = Integer.toString(i * 5);
+//      //seconds[i] = number.length() < 2 ? "0" + number : number;
+//      seconds[i] = number;
+//    }
+//    numberPickerForSeconds.setDisplayedValues(seconds);
+//    numberPickerForSeconds.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+//      @Override
+//      public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+//        picker.setValue((newVal < oldVal) ? (oldVal - 5) : (oldVal + 5));
+//      }
+//    });
+    numberPickerForSeconds.setWrapSelectorWheel(true);
+
+    return dialog;
+  }
 }

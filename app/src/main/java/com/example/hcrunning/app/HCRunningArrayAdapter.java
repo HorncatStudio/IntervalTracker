@@ -15,8 +15,8 @@ import java.util.List;
  * Created by Shinichi on 2014/07/24.
  */
 public class HCRunningArrayAdapter extends ArrayAdapter<TextView> {
-  List<TimeInterval> mIntervals;
-  Activity mParentActivity;
+  private List<TimeInterval> mIntervals;
+  private Activity mParentActivity;
 
   /**
    * Constructs this adapter
@@ -67,6 +67,19 @@ public class HCRunningArrayAdapter extends ArrayAdapter<TextView> {
     TextView textView = (TextView) mParentActivity.findViewById(R.id.textView);
     textView.setText(interval.toString());
     this.add(textView);
+  }
+
+  public void replace( int position, TimeInterval interval ) {
+    TextView oldView = this.getItem(position);
+    this.remove(oldView);
+
+    this.mIntervals.remove(position);
+
+    mIntervals.set( position, interval );
+    TextView textView = (TextView) mParentActivity.findViewById(R.id.textView);
+
+    textView.setText(interval.toString());
+    this.insert(textView, position);
   }
 
   public List<TimeInterval> getTimes() {

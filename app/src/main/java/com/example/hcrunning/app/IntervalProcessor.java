@@ -90,11 +90,8 @@ public class IntervalProcessor implements HCRunningCountDownListener {
     HCRunningCountDownTimer pausedTimer = this.mCountDownTimerList.get(this.mCurrentIndex);
     pausedTimer.cancel();
 
-    String pausedTime = this.mDisplayCountDownView.getText().toString();
-    String[] pausedSplitTime = pausedTime.split(":", 0);
-    long pausedTimeMinute = Long.parseLong(pausedSplitTime[0]);
-    long pausedTimeSeconds = Long.parseLong(pausedSplitTime[1]);
-    long totalInMilliSeconds = ((pausedTimeMinute * 60) + pausedTimeSeconds) * 1000;
+    TimeInterval pausedInterval = HCRunningToolkit.getTimeInterval(this.mDisplayCountDownView);
+    long totalInMilliSeconds = pausedInterval.toMilliseconds();
 
     HCRunningCountDownTimer replacingTimer = new HCRunningCountDownTimer(totalInMilliSeconds, 50, mDisplayCountDownView, mContext, this);
 
