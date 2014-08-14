@@ -73,9 +73,9 @@ public class HCRunningArrayAdapter extends ArrayAdapter<TextView> {
     TextView oldView = this.getItem(position);
     this.remove(oldView);
 
-    this.mIntervals.remove(position);
+    //this.mIntervals.remove(position);
 
-    mIntervals.set( position, interval );
+    this.mIntervals.set( position, interval );
     TextView textView = (TextView) mParentActivity.findViewById(R.id.textView);
 
     textView.setText(interval.toString());

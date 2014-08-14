@@ -85,8 +85,9 @@ public class HCRunningActivity extends Activity {
     public void onResetButton(View view) {
       this.mProcessor.cancel();
       this.mAdapter.clear();
+      this.mAdapter.clearListItem();
       this.mAdapter.notifyDataSetChanged();
-      this.mIntervals.clear();         // or this.mAdapter.clearListItem();
+      //this.mIntervals.clear();
     }
 
     public void showNumberPicker() {
@@ -178,21 +179,23 @@ public class HCRunningActivity extends Activity {
     numberPickerForMinutes.setWrapSelectorWheel(true);
 
     final NumberPicker numberPickerForSeconds = (NumberPicker) dialog.findViewById(R.id.numberPickerSeconds);
-    numberPickerForSeconds.setMaxValue(59);
-    numberPickerForSeconds.setMinValue(0);
-//    final String[] seconds = new String[11];
+    //final String[] seconds = new String[12];
+    final String[] seconds = {"00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55"};
 //    for (int i = 0; i < seconds.length; i++) {
 //      String number = Integer.toString(i * 5);
 //      //seconds[i] = number.length() < 2 ? "0" + number : number;
 //      seconds[i] = number;
 //    }
-//    numberPickerForSeconds.setDisplayedValues(seconds);
-//    numberPickerForSeconds.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-//      @Override
-//      public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-//        picker.setValue((newVal < oldVal) ? (oldVal - 5) : (oldVal + 5));
-//      }
-//    });
+    numberPickerForSeconds.setDisplayedValues(seconds);
+    numberPickerForSeconds.setMaxValue(seconds.length - 1);
+    numberPickerForSeconds.setMinValue(0);
+    numberPickerForSeconds.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+      @Override
+      public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+        //picker.setValue((newVal < oldVal) ? (oldVal - 5) : (oldVal + 5));
+        newVal = Integer.parseInt(seconds[newVal]);
+      }
+    });
     numberPickerForSeconds.setWrapSelectorWheel(true);
 
     return dialog;
