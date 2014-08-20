@@ -103,7 +103,7 @@ public class HCRunningActivity extends Activity {
         @Override
         public void onClick(View v) {
           long minutesPart = numberPickerForMinutes.getValue();
-          long secondsPart = numberPickerForSeconds.getValue();
+          long secondsPart = numberPickerForSeconds.getValue() * 5;
 
           TimeInterval interval = new TimeInterval(minutesPart, secondsPart);
           mCurrentTimeTextView.setText(interval.toString());
@@ -140,7 +140,7 @@ public class HCRunningActivity extends Activity {
       @Override
       public void onClick(View v) {
         long minutesPart = numberPickerForMinutes.getValue();
-        long secondsPart = numberPickerForSeconds.getValue();
+        long secondsPart = numberPickerForSeconds.getValue() * 5;
 
         TimeInterval updatedInterval = new TimeInterval(minutesPart, secondsPart);
         updateInterval(updatedInterval, positionInAdapter);
@@ -170,30 +170,24 @@ public class HCRunningActivity extends Activity {
     final NumberPicker numberPickerForMinutes = (NumberPicker) dialog.findViewById(R.id.numberPickerMinutes);
     numberPickerForMinutes.setMaxValue(59);
     numberPickerForMinutes.setMinValue(0);
-//    numberPickerForMinutes.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-//      @Override
-//      public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-//        picker.setValue((newVal < oldVal) ? (oldVal -1) : (oldVal + 1));
-//      }
-//    });
     numberPickerForMinutes.setWrapSelectorWheel(true);
 
     final NumberPicker numberPickerForSeconds = (NumberPicker) dialog.findViewById(R.id.numberPickerSeconds);
-    //final String[] seconds = new String[12];
+//    final String[] seconds = new String[12];
     final String[] seconds = {"00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55"};
 //    for (int i = 0; i < seconds.length; i++) {
 //      String number = Integer.toString(i * 5);
 //      //seconds[i] = number.length() < 2 ? "0" + number : number;
-//      seconds[i] = number;
 //    }
     numberPickerForSeconds.setDisplayedValues(seconds);
     numberPickerForSeconds.setMaxValue(seconds.length - 1);
+//    numberPickerForSeconds.setMaxValue(59);
     numberPickerForSeconds.setMinValue(0);
     numberPickerForSeconds.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
       @Override
       public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
         //picker.setValue((newVal < oldVal) ? (oldVal - 5) : (oldVal + 5));
-        newVal = Integer.parseInt(seconds[newVal]);
+        //newVal = Integer.parseInt(seconds[newVal]);
       }
     });
     numberPickerForSeconds.setWrapSelectorWheel(true);
