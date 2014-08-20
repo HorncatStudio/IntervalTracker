@@ -61,9 +61,14 @@ public class HCRunningCountDownTimer extends CountDownTimer {
 
   @Override
   public void onTick(long millisUntilFinished) {
-    long minutesPart = millisUntilFinished / 1000 / 60;
+    long minutesPart = (millisUntilFinished / 1000) / 60;
 //    long secondsPart = (millisUntilFinished / 1000 % 60) + 1;
-    long secondsPart = millisUntilFinished / 1000 % 60;
-    this.mTimeTextView.setText(Long.toString(minutesPart) + ":" + Long.toString(secondsPart));
+    long secondsPart = (millisUntilFinished / 1000) % 60;
+    if(secondsPart < 10) {
+      this.mTimeTextView.setText(Long.toString(minutesPart) + ":0"  + Long.toString(secondsPart));
+    }
+    else {
+      this.mTimeTextView.setText(Long.toString(minutesPart) + ":" + Long.toString(secondsPart));
+    }
   }
 }

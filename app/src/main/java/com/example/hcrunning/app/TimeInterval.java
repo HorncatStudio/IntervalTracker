@@ -16,6 +16,9 @@ public class TimeInterval {
   }
 
   public String toString() {
+    if(Seconds < 10) {
+      return Long.toString(Minutes) + ":0" + Long.toString(Seconds);
+    }
     return  Long.toString(Minutes) + ":" + Long.toString(Seconds);
   }
 
