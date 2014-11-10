@@ -11,12 +11,26 @@ import java.util.List;
  */
 public class IntervalProcessor implements HCRunningCountDownListener {
   /** Members */
+  //! The current countdown timer being processed within the IntervalProcessor.  Must be reset
+  //! to zero once all of the timers are processed.
   private int mCurrentIndex = 0;
+
+  //! The list of countdown timers to be processed
   private ArrayList<HCRunningCountDownTimer> mCountDownTimerList;
+
+  //! The text view that displays the current time being counted down.  It is updated every second.
   private TextView mDisplayCountDownView;
+
+  //! Context that is needed for the count down timer's usage of a media player
   private Context mContext;
 
-  /** Constructor */
+  /**
+   * Responsible for counting down a provided set of time intervals.  Displays the current time countdown in
+   * the @displayCountDownView and uses the @context to create a ding sound once each interval is  complete.
+   *
+   * @param displayCountDownView The text view that shall display the current time being counted down
+   * @param context The context that the media player shall use to create a ding sound
+   */
   public IntervalProcessor (TextView displayCountDownView, Context context ) {
     mCountDownTimerList = new ArrayList<HCRunningCountDownTimer>();
     mDisplayCountDownView = displayCountDownView;
@@ -36,12 +50,6 @@ public class IntervalProcessor implements HCRunningCountDownListener {
     if( timeIntervalList.isEmpty() )
       return;
 
-    // Using foreach-loop. Same as following:
-    // for (int i = 0; i < timeIntervalList.length; i++)
-    // {
-    //   TimeInterval interval = timeIntervalList[i];
-    //   mCountDownTimerList.add( new HCRunningCountDownTimer(interval.toMilliseconds(), 50, mDisplayCountDownView, mContext, this ) );
-    // }
     for( TimeInterval interval : timeIntervalList ) {
       mCountDownTimerList.add( new HCRunningCountDownTimer(interval.toMilliseconds(), 50, mDisplayCountDownView, mContext, this ) );
     }

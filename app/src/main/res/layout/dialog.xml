@@ -67,6 +67,6 @@
                 android:text="Cancel"
                 android:onClick="onNumberPickerCancelButton"/>
 
-    ></TableRow>
+    </TableRow>
 
 </TableLayout>

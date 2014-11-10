@@ -64,7 +64,7 @@ public class HCRunningArrayAdapter extends ArrayAdapter<TextView> {
   public void add( TimeInterval interval ) {
     mIntervals.add( interval );
 
-    TextView textView = (TextView) mParentActivity.findViewById(R.id.textView);
+    TextView textView = new TextView( getContext() );
     textView.setText(interval.toString());
     this.add(textView);
   }
@@ -73,10 +73,8 @@ public class HCRunningArrayAdapter extends ArrayAdapter<TextView> {
     TextView oldView = this.getItem(position);
     this.remove(oldView);
 
-    //this.mIntervals.remove(position);
-
     this.mIntervals.set( position, interval );
-    TextView textView = (TextView) mParentActivity.findViewById(R.id.textView);
+    TextView textView = (TextView) mParentActivity.findViewById(R.id.time);
 
     textView.setText(interval.toString());
     this.insert(textView, position);

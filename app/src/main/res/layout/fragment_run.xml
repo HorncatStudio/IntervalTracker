@@ -1,0 +1,73 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" tools:context="com.example.hcrunning.app.RunFragment"
+    android:textAlignment="center">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:baselineAligned="false">
+
+        <TableLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center|center_horizontal"
+            android:stretchColumns="*"
+            android:weightSum="1">
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <ToggleButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Start"
+                    android:id="@+id/button_start"
+                    android:layout_margin="10dp"
+                    android:singleLine="false"
+                    android:textOn="Cancel"
+                    android:textOff="Start"
+                    />
+
+                <ToggleButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pause"
+                    android:id="@+id/button_pause"
+                    android:layout_margin="10dp"
+                    android:textOn="Continue"
+                    android:textOff="Pause"
+                    android:enabled="false" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Reset"
+                    android:id="@+id/button_reset"
+                    android:layout_margin="10dp" />
+            </TableRow>
+
+        </TableLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="1:00"
+            android:id="@+id/textview_curent_countdown"
+            android:layout_gravity="center|top"
+            android:textSize="@dimen/abc_action_bar_stacked_max_height"
+            android:textStyle="bold" />
+
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="460dp"
+            android:id="@+id/listview_countdown_display" />
+
+    </LinearLayout>
+
+</FrameLayout>
