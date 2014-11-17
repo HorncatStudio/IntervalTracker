@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -17,7 +18,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RunFragment extends Fragment {
+public class RunFragment extends Fragment implements View.OnClickListener {
   // TODO: Rename parameter arguments, choose names that match
   // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
   private static final String ARG_PARAM1 = "param1";
@@ -95,6 +96,15 @@ public class RunFragment extends Fragment {
     this.mListView = (ListView)view.findViewById(R.id.listview_countdown_display);
     mListView.setAdapter(mAdapter);
 
+    ToggleButton startButton = (ToggleButton) view.findViewById(R.id.button_start);
+    startButton.setOnClickListener(this);
+
+    ToggleButton pauseButton = (ToggleButton) view.findViewById(R.id.button_pause);
+    pauseButton.setOnClickListener(this);
+
+    Button resetButton = (Button) view.findViewById(R.id.button_reset);
+    resetButton.setOnClickListener(this);
+
     return view;
   }
 
@@ -163,5 +173,20 @@ public class RunFragment extends Fragment {
     this.mAdapter.clearListItem();
     this.mAdapter.notifyDataSetChanged();
     //this.mIntervals.clear();
+  }
+
+  @Override
+  public void onClick(View v) {
+    switch (v.getId()) {
+      case R.id.button_start:
+        onStartAndCancelToggleButton(v);
+        break;
+      case R.id.button_pause:
+        onPauseAndContinueToggleButton(v);
+        break;
+      case R.id.button_reset:
+        onResetButton(v);
+        break;
+    }
   }
 }
