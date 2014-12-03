@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class CreateFragment extends Fragment implements View.OnClickListener {
+
   // TODO: Rename parameter arguments, choose names that match
   // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
   private static final String ARG_PARAM1 = "param1";
@@ -32,8 +34,8 @@ public class CreateFragment extends Fragment implements View.OnClickListener {
   private String mParam2;
 
 
-  //! \todo was apart of auto generated code, determine if this really necessary
-//  private OnFragmentInteractionListener mListener;
+  //! Listener for commanding the main activity to run with the intervals provided
+  private RunIntervalsCreatedListener mIntervalsCreatedListener = null;
 
   //! The adapter that manages the time intervals in the display for the list view
   private HCRunningArrayAdapter mAdapter;
@@ -65,6 +67,12 @@ public class CreateFragment extends Fragment implements View.OnClickListener {
   @Override
   public void onAttach(Activity activity) {
     super.onAttach(activity);
+
+    try {
+      mIntervalsCreatedListener = (RunIntervalsCreatedListener) activity;
+    } catch (ClassCastException e) {
+      Log.d("Warning", "Activity does not implement listener to handle interval creation.");
+    }
   }
 
   @Override
@@ -100,11 +108,21 @@ public class CreateFragment extends Fragment implements View.OnClickListener {
 
     Button addButton = (Button) view.findViewById(R.id.add_button);
     addButton.setOnClickListener(this);
+
+    Button runButton = (Button) view.findViewById(R.id.run_button);
+    runButton.setOnClickListener(this);
     return view;
   }
 
   public void onAddButton(View view){
     this.showNumberPicker();
+  }
+
+  public void onRunButtonClicked(View view) {
+    if( mIntervalsCreatedListener == null )
+      return;
+
+    mIntervalsCreatedListener.onRunIntervalsCreated( this.mAdapter.getTimesInMilliseconds() );
   }
 
   public void showNumberPicker() {
@@ -223,6 +241,9 @@ public class CreateFragment extends Fragment implements View.OnClickListener {
     switch (v.getId()) {
       case R.id.add_button:
         onAddButton(v);
+        break;
+      case R.id.run_button:
+        onRunButtonClicked(v);
         break;
     }
   }

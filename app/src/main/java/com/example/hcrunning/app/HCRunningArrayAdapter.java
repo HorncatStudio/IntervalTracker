@@ -84,6 +84,18 @@ public class HCRunningArrayAdapter extends ArrayAdapter<TextView> {
     return mIntervals;
   }
 
+  public ArrayList<Integer> getTimesInMilliseconds()
+  {
+    ArrayList<Integer> milisecondsList = new ArrayList<Integer>();
+
+    for (TimeInterval interval : mIntervals) {
+      milisecondsList.add( new Integer( (int)interval.toMilliseconds() ) );
+    }
+
+    return milisecondsList;
+  }
+
+
   public void clearListItem() {
     mIntervals.clear();
   }

@@ -65,8 +65,9 @@
 
         <ListView
             android:layout_width="wrap_content"
-            android:layout_height="460dp"
-            android:id="@+id/listview_countdown_display" />
+            android:layout_height="wrap_content"
+            android:id="@+id/listview_countdown_display"
+            android:layout_weight="1"/>
 
     </LinearLayout>
 

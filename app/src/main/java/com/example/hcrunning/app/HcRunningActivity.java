@@ -5,7 +5,9 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import com.example.android.common.view.SlidingTabLayout;
 
-public class HCRunningActivity extends FragmentActivity {
+import java.util.ArrayList;
+
+public class HCRunningActivity extends FragmentActivity implements RunIntervalsCreatedListener{
 
   //! The sections pager responsible for going to the different sections of the app.
   //! \todo rename class
@@ -17,7 +19,7 @@ public class HCRunningActivity extends FragmentActivity {
   ViewPager mViewPager;
 
 
- SlidingTabLayout mSlidingTabLayout;
+  SlidingTabLayout mSlidingTabLayout;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -31,5 +33,11 @@ public class HCRunningActivity extends FragmentActivity {
 
     mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
     mSlidingTabLayout.setViewPager(mViewPager);
+  }
+
+  @Override
+  public void onRunIntervalsCreated(ArrayList<Integer> intervals) {
+    mAppSectionsPagerAdapter.sendIntervalsToRun(intervals);
+    mViewPager.setCurrentItem( mAppSectionsPagerAdapter.RUN_INDEX );
   }
 }

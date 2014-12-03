@@ -37,6 +37,11 @@ public class IntervalProcessor implements HCRunningCountDownListener {
     mContext = context;
   }
 
+  public void setCurrentTimeDisplay( TextView displayCurrentTimeView ) {
+    this.mDisplayCountDownView = displayCurrentTimeView;
+  }
+
+
   /**
    * setIntervals() does 3 things:
    * (1) clears the entire (previous) list items of count down timer in order to move on to the next interval sets.

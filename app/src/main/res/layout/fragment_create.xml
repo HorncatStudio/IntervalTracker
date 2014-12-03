@@ -4,17 +4,30 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/listview_countdown_create"
-        android:layout_gravity="center_horizontal|top" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/add_text"
-        android:id="@+id/add_button"
-        android:layout_gravity="left|bottom"/>
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/listview_countdown_create"
+            android:layout_weight="1"/>
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/add_text"
+            android:id="@+id/add_button"
+            android:layout_weight="0"/>
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Start Run"
+            android:id="@+id/run_button"
+            android:layout_weight="0"/>
+    </LinearLayout>
 
 </FrameLayout>

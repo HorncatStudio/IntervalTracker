@@ -1,5 +1,7 @@
 package com.example.hcrunning.app;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * Created by Shinichi on 2014/07/26.
  */
@@ -9,6 +11,13 @@ public class TimeInterval {
   public long Seconds = 0;
 
   /** Constructor */
+  public TimeInterval( Integer milliseconds )
+  {
+    Minutes = TimeUnit.MILLISECONDS.toMinutes(milliseconds);
+    Seconds = TimeUnit.MILLISECONDS.toSeconds(milliseconds) - TimeUnit.MILLISECONDS.toSeconds(Minutes);
+  }
+
+
   public TimeInterval(long minutes, long seconds)
   {
     Minutes = minutes;
