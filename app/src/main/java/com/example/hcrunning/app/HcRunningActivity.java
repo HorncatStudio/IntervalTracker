@@ -6,6 +6,7 @@ import android.support.v4.view.ViewPager;
 import com.example.android.common.view.SlidingTabLayout;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class HCRunningActivity extends FragmentActivity implements RunIntervalsCreatedListener{
 
@@ -36,7 +37,7 @@ public class HCRunningActivity extends FragmentActivity implements RunIntervalsC
   }
 
   @Override
-  public void onRunIntervalsCreated(ArrayList<Integer> intervals) {
+  public void onRunIntervalsCreated( List<TimeInterval> intervals) {
     mAppSectionsPagerAdapter.sendIntervalsToRun(intervals);
     mViewPager.setCurrentItem( mAppSectionsPagerAdapter.RUN_INDEX );
   }

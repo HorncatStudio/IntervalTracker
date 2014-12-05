@@ -2,6 +2,7 @@ package com.example.hcrunning.app;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import java.util.List;
 public class HCRunningArrayAdapter extends ArrayAdapter<TextView> {
   private List<TimeInterval> mIntervals;
   private Activity mParentActivity;
+  private int mHighlightedIndex = -1;
 
   /**
    * Constructs this adapter
@@ -46,6 +48,10 @@ public class HCRunningArrayAdapter extends ArrayAdapter<TextView> {
     TextView timeTextView = (TextView) rowView.findViewById(R.id.time);
     TimeInterval time = mIntervals.get(position);
     timeTextView.setText( time.toString() );
+
+    if( position == this.mHighlightedIndex ) {
+      timeTextView.setBackgroundColor(Color.GRAY);
+    }
 
     return rowView;
   }
@@ -95,6 +101,10 @@ public class HCRunningArrayAdapter extends ArrayAdapter<TextView> {
     return milisecondsList;
   }
 
+  public void setHighlighted( final int index ) {
+    mHighlightedIndex = index;
+    this.notifyDataSetChanged();
+  }
 
   public void clearListItem() {
     mIntervals.clear();

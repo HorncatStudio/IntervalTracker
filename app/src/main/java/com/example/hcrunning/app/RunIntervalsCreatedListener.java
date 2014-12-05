@@ -1,6 +1,6 @@
 package com.example.hcrunning.app;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Responsible for enabling activities to communicate with their fragments to notify
@@ -9,5 +9,5 @@ import java.util.ArrayList;
  */
 public interface RunIntervalsCreatedListener {
 
-  public void onRunIntervalsCreated( ArrayList<Integer> intervals );
+  public void onRunIntervalsCreated( List<TimeInterval> intervals );
 }

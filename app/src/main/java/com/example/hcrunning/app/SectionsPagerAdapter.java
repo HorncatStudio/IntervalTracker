@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Angelina on 11/7/2014.
@@ -63,7 +64,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter{
     }
   }
 
-  public void sendIntervalsToRun( final ArrayList<Integer> intervals )
+  public void sendIntervalsToRun( final List<TimeInterval> intervals )
   {
     if( mRunFragment == null)
       return;

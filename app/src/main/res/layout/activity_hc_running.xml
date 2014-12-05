@@ -5,8 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:context=".HCRunningActivity"
-    tools:ignore="MergeRootFrame" >>
+    tools:ignore="MergeRootFrame" >
 
     <EditText
         android:layout_width="fill_parent"

@@ -122,7 +122,7 @@ public class CreateFragment extends Fragment implements View.OnClickListener {
     if( mIntervalsCreatedListener == null )
       return;
 
-    mIntervalsCreatedListener.onRunIntervalsCreated( this.mAdapter.getTimesInMilliseconds() );
+    mIntervalsCreatedListener.onRunIntervalsCreated( this.mAdapter.getTimes() );
   }
 
   public void showNumberPicker() {

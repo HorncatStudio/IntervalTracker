@@ -24,6 +24,8 @@ public class IntervalProcessor implements HCRunningCountDownListener {
   //! Context that is needed for the count down timer's usage of a media player
   private Context mContext;
 
+  private IntervalCompleteListener mIntervalCompleteListener = null;
+
   /**
    * Responsible for counting down a provided set of time intervals.  Displays the current time countdown in
    * the @displayCountDownView and uses the @context to create a ding sound once each interval is  complete.
@@ -41,6 +43,9 @@ public class IntervalProcessor implements HCRunningCountDownListener {
     this.mDisplayCountDownView = displayCurrentTimeView;
   }
 
+  public void registerIntervalCompleteListener( IntervalCompleteListener listener ) {
+    this.mIntervalCompleteListener = listener;
+  }
 
   /**
    * setIntervals() does 3 things:
@@ -70,8 +75,13 @@ public class IntervalProcessor implements HCRunningCountDownListener {
     if( this.mCountDownTimerList.isEmpty() )
       return;
 
+    if( mIntervalCompleteListener != null ) {
+      mIntervalCompleteListener.onIntervalComplete(0);
+    }
+
     HCRunningCountDownTimer firstTimer = this.mCountDownTimerList.get(this.mCurrentIndex);
     firstTimer.start();
+
   }
 
   /**
@@ -144,7 +154,15 @@ public class IntervalProcessor implements HCRunningCountDownListener {
     this.mCurrentIndex++;
     if( this.mCurrentIndex == this.mCountDownTimerList.size() ) {
       this.mCountDownTimerList.clear();
+      this.mDisplayCountDownView.setText("Done!");
+      if( mIntervalCompleteListener != null ) {
+        this.mIntervalCompleteListener.onIntervalComplete(-1);
+      }
       return;
+    }
+
+    if( mIntervalCompleteListener != null ) {
+      mIntervalCompleteListener.onIntervalComplete(this.mCurrentIndex);
     }
 
     HCRunningCountDownTimer nextTime = this.mCountDownTimerList.get(this.mCurrentIndex);

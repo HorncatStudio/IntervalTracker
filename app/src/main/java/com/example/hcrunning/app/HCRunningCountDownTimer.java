@@ -37,7 +37,8 @@ public class HCRunningCountDownTimer extends CountDownTimer {
 
   @Override
   public void onFinish() {
-    this.mTimeTextView.setText("Done!");
+   // Going to move this to the interval processor class since it knows when the last one occurs
+   // this.mTimeTextView.setText("Done!");
     final MediaPlayer mPlayer = MediaPlayer.create(mContext, R.raw.coinsound);
     mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
       @Override
