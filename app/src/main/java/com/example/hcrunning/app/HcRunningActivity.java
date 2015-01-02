@@ -8,7 +8,7 @@ import com.example.android.common.view.SlidingTabLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HCRunningActivity extends FragmentActivity implements RunIntervalsCreatedListener{
+public class HcRunningActivity extends FragmentActivity implements RunIntervalsCreatedListener, CreateTimerListener {
 
   //! The sections pager responsible for going to the different sections of the app.
   //! \todo rename class
@@ -34,11 +34,17 @@ public class HCRunningActivity extends FragmentActivity implements RunIntervalsC
 
     mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
     mSlidingTabLayout.setViewPager(mViewPager);
+
   }
 
   @Override
   public void onRunIntervalsCreated( List<TimeInterval> intervals) {
     mAppSectionsPagerAdapter.sendIntervalsToRun(intervals);
     mViewPager.setCurrentItem( mAppSectionsPagerAdapter.RUN_INDEX );
+  }
+
+  @Override
+  public void createATimer() {
+    mViewPager.setCurrentItem( mAppSectionsPagerAdapter.CREATE_INDEX );
   }
 }

@@ -14,13 +14,13 @@ import java.util.List;
  */
 public class SectionsPagerAdapter extends FragmentPagerAdapter{
 
+  public static final CharSequence HOME_TITLE = "Home";
   public static final CharSequence CREATE_TITLE = "Create";
   public static final CharSequence RUN_TITLE = "Run";
 
-  public static final int CREATE_INDEX = 0;
-  public static final int RUN_INDEX = 1;
-
-  ArrayList<Integer> mIntervalsToRun = new ArrayList<Integer>();
+  public static final int HOME_INDEX = 0;
+  public static final int CREATE_INDEX = 1;
+  public static final int RUN_INDEX = 2;
 
   public SectionsPagerAdapter( FragmentManager fragmentManager )
   {
@@ -29,10 +29,16 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter{
 
   CreateFragment mCreateFragment = null;
   RunFragment mRunFragment = null;
+  RtHomeFragment mHomeFragment = null;
 
   @Override
   public Fragment getItem(int i) {
     switch(i) {
+        case HOME_INDEX:
+          if( null == mHomeFragment) {
+            mHomeFragment = new RtHomeFragment();
+          }
+          return mHomeFragment;
       case CREATE_INDEX:
         if( null == mCreateFragment ) {
           mCreateFragment = new CreateFragment();
@@ -48,13 +54,15 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter{
 
   @Override
   public int getCount() {
-    return 2;
+    return 3;
   }
 
   @Override
   public CharSequence getPageTitle( int index )
   {
     switch(index) {
+      case HOME_INDEX:
+        return HOME_TITLE;
       case CREATE_INDEX:
         return CREATE_TITLE;
       case RUN_INDEX:

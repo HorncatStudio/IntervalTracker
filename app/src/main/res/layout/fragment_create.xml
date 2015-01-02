@@ -9,12 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ListView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/listview_countdown_create"
-            android:layout_weight="1"/>
-
         <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -25,9 +19,16 @@
         <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Start Run"
+            android:text="Start Training"
             android:id="@+id/run_button"
             android:layout_weight="0"/>
+
+        <ListView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/listview_countdown_create"
+            android:layout_weight="1"/>
+
     </LinearLayout>
 
 </FrameLayout>
