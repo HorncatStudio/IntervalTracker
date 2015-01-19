@@ -14,11 +14,11 @@ import android.widget.Button;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RtHomeFragment extends Fragment implements View.OnClickListener {
+public class ItHomeFragment extends Fragment implements View.OnClickListener {
 
-  private CreateTimerListener mCreateTimersListener = null;
+  private CreateIntervalsListener mCreateTimersListener = null;
 
-  public RtHomeFragment() {
+  public ItHomeFragment() {
     // Required empty public constructor
   }
 
@@ -27,7 +27,7 @@ public class RtHomeFragment extends Fragment implements View.OnClickListener {
     super.onAttach(activity);
 
     try {
-      mCreateTimersListener = (CreateTimerListener) activity;
+      mCreateTimersListener = (CreateIntervalsListener) activity;
     } catch (ClassCastException e ) {
       Log.d("Warning", "Activity does not support listener to handle loading the create section.");
     }
@@ -55,7 +55,7 @@ public class RtHomeFragment extends Fragment implements View.OnClickListener {
 
   private void onCreateTimer() {
     if( null != this.mCreateTimersListener ) {
-      this.mCreateTimersListener.createATimer();
+      this.mCreateTimersListener.displayCreateIntervals();
     }
   }
 }

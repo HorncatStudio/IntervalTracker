@@ -18,21 +18,21 @@ import java.util.ArrayList;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * Responsible for creating intervals to be processed.
  */
-public class CreateFragment extends Fragment implements View.OnClickListener {
+public class CreateIntervalsFragment extends Fragment implements View.OnClickListener {
 
   //! Listener for commanding the main activity to run with the intervals provided
   private RunIntervalsCreatedListener mIntervalsCreatedListener = null;
 
   //! The adapter that manages the time intervals in the display for the list view
-  private HCRunningArrayAdapter mAdapter;
+  private IntervalArrayAdapter mAdapter;
 
   //! The list view that displays the intervals for creation
   private ListView mListView;
 
   /** Must be empty.  First method called after creating the fragment is onAttach() */
-  public CreateFragment() {}
+  public CreateIntervalsFragment() {}
 
   @Override
   public void onAttach(Activity activity) {
@@ -54,7 +54,7 @@ public class CreateFragment extends Fragment implements View.OnClickListener {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    mAdapter = new HCRunningArrayAdapter( getActivity().getApplicationContext(), new ArrayList<TextView>(), getActivity() );
+    mAdapter = new IntervalArrayAdapter( getActivity().getApplicationContext(), new ArrayList<TextView>(), getActivity() );
   }
 
   @Override
@@ -108,10 +108,6 @@ public class CreateFragment extends Fragment implements View.OnClickListener {
 
         TimeInterval interval = new TimeInterval(minutesPart, secondsPart);
 
-        //! \todo determine if this is a feature that is still desired
-        //! \note used to display the last one added
-        //! mCurrentTimeTextView.setText(interval.toString());
-
         mAdapter.add(interval);
         dialog.dismiss();
       }
@@ -130,7 +126,7 @@ public class CreateFragment extends Fragment implements View.OnClickListener {
   public void updateFromNumberPicker( final TextView textViewInterval, final int positionInAdapter ) {
     final Dialog dialog = createNumberPickerDialog();
 
-    TimeInterval interval = HCRunningToolkit.getTimeInterval(textViewInterval);
+    TimeInterval interval = IntervalTrackerToolkit.getTimeInterval(textViewInterval);
     final NumberPicker numberPickerForMinutes = (NumberPicker) dialog.findViewById(R.id.numberPickerMinutes);
     numberPickerForMinutes.setValue((int) (interval.Minutes));
 
@@ -177,25 +173,14 @@ public class CreateFragment extends Fragment implements View.OnClickListener {
     numberPickerForMinutes.setWrapSelectorWheel(true);
 
     final NumberPicker numberPickerForSeconds = (NumberPicker) dialog.findViewById(R.id.numberPickerSeconds);
+
+    //! todo - future figure out how to make these a list of "numbers" to be displayed so the text box is numeric
+    //!        instead of it being a string which makes it awkward to manually edit
     final String[] seconds = {"00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55"};
 
-    //! \todo deprecrated code that needs to be reviewed to ensure if it is ok to delete
-//    final String[] seconds = new String[12];
-//    for (int i = 0; i < seconds.length; i++) {
-//      String number = Integer.toString(i * 5);
-//      //seconds[i] = number.length() < 2 ? "0" + number : number;
-//    }
     numberPickerForSeconds.setDisplayedValues(seconds);
     numberPickerForSeconds.setMaxValue(seconds.length - 1);
-//    numberPickerForSeconds.setMaxValue(59);
     numberPickerForSeconds.setMinValue(0);
-    numberPickerForSeconds.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-      @Override
-      public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-        //picker.setValue((newVal < oldVal) ? (oldVal - 5) : (oldVal + 5));
-        //newVal = Integer.parseInt(seconds[newVal]);
-      }
-    });
     numberPickerForSeconds.setWrapSelectorWheel(true);
 
     return dialog;

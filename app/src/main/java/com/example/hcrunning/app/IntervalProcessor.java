@@ -7,16 +7,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Shinichi on 2014/07/26.
+ * Process the intervals provided.  Allows the user to start, stop, pause, and cancel interface processing.
  */
-public class IntervalProcessor implements HCRunningCountDownListener {
+public class IntervalProcessor implements IntervalTimer.IntervalTimerListener {
+
+  /**
+   * Listener that can be registered with the IntervalProcessor in order to do an action
+   * when an individual interval has been processed.
+   */
+  public interface IntervalCompleteListener {
+    public static final int INTERVAL_FINISHED = -1;
+    public static final int INTERVAL_START = 0;
+    public void onIntervalComplete( final int intervalIndex );
+  }
+
   /** Members */
   //! The current countdown timer being processed within the IntervalProcessor.  Must be reset
   //! to zero once all of the timers are processed.
   private int mCurrentIndex = 0;
 
   //! The list of countdown timers to be processed
-  private ArrayList<HCRunningCountDownTimer> mCountDownTimerList;
+  private ArrayList<IntervalTimer> mCountDownTimerList;
 
   //! The text view that displays the current time being counted down.  It is updated every second.
   private TextView mDisplayCountDownView;
@@ -24,7 +35,7 @@ public class IntervalProcessor implements HCRunningCountDownListener {
   //! Context that is needed for the count down timer's usage of a media player
   private Context mContext;
 
-  private IntervalCompleteListener mIntervalCompleteListener = null;
+  private IntervalCompleteListener mIntervalProcessedListener = null;
 
   /**
    * Responsible for counting down a provided set of time intervals.  Displays the current time countdown in
@@ -34,7 +45,7 @@ public class IntervalProcessor implements HCRunningCountDownListener {
    * @param context The context that the media player shall use to create a ding sound
    */
   public IntervalProcessor (TextView displayCountDownView, Context context ) {
-    mCountDownTimerList = new ArrayList<HCRunningCountDownTimer>();
+    mCountDownTimerList = new ArrayList<IntervalTimer>();
     mDisplayCountDownView = displayCountDownView;
     mContext = context;
   }
@@ -44,15 +55,11 @@ public class IntervalProcessor implements HCRunningCountDownListener {
   }
 
   public void registerIntervalCompleteListener( IntervalCompleteListener listener ) {
-    this.mIntervalCompleteListener = listener;
+    this.mIntervalProcessedListener = listener;
   }
 
   /**
-   * setIntervals() does 3 things:
-   * (1) clears the entire (previous) list items of count down timer in order to move on to the next interval sets.
-   *     If interval list is empty, this function returns without further operation,
-   * (2) puts the all interval data into count down timer list, and
-   * (3) initializes the index for the next time this function called
+   * Setting the intervals to be processed. Resets IntervalProcessor.
    */
   public void setIntervals(List<TimeInterval> timeIntervalList) {
     this.mCountDownTimerList.clear();
@@ -61,72 +68,62 @@ public class IntervalProcessor implements HCRunningCountDownListener {
       return;
 
     for( TimeInterval interval : timeIntervalList ) {
-      mCountDownTimerList.add( new HCRunningCountDownTimer(interval.toMilliseconds(), 50, mDisplayCountDownView, mContext, this ) );
+      mCountDownTimerList.add( new IntervalTimer(interval.toMilliseconds(), 50, mDisplayCountDownView, mContext, this ) );
     }
 
     this.mCurrentIndex = 0;
   }
 
   /**
-   * start() starts the timer, also checks if list of count down timer is empty or not.
-   * If empty it returns without further operation.
+   * Starts the timers. If empty it returns without further operation.
    */
   public void start() {
     if( this.mCountDownTimerList.isEmpty() )
       return;
 
-    if( mIntervalCompleteListener != null ) {
-      mIntervalCompleteListener.onIntervalComplete(0);
+    if( mIntervalProcessedListener != null ) {
+      mIntervalProcessedListener.onIntervalComplete(IntervalCompleteListener.INTERVAL_START);
     }
 
-    HCRunningCountDownTimer firstTimer = this.mCountDownTimerList.get(this.mCurrentIndex);
+    IntervalTimer firstTimer = this.mCountDownTimerList.get(this.mCurrentIndex);
     firstTimer.start();
 
   }
 
   /**
-   * stop() stops the timer, also checks if list of count down timer is empty or not.
-   * If empty it returns without further operation. Also initialized the current index.
+   * Stops the timer.  Resets interval to process back to first interval.
    */
   public void stop() {
     if( this.mCountDownTimerList.isEmpty() )
       return;
 
-    HCRunningCountDownTimer stoppedTimer = this.mCountDownTimerList.get(this.mCurrentIndex);
+    IntervalTimer stoppedTimer = this.mCountDownTimerList.get(this.mCurrentIndex);
     stoppedTimer.cancel();
 
     this.mCurrentIndex = 0;
   }
 
   /**
-   * pause() does four things:
-   * (1) cancels the timer,
-   * (2) takes the paused time,
-   * (3) creates new timer which replaces old one, and
-   * (4) adds it to the count down timer list.
-   * If count down timer list is empty, this returns without further operations.
+   * Pauses the current interval being processed.  To restart processing the interval paused, use the
+   * start() method.
    */
   public void pause() {
     if( this.mCountDownTimerList.isEmpty() )
       return;
 
-    HCRunningCountDownTimer pausedTimer = this.mCountDownTimerList.get(this.mCurrentIndex);
+    IntervalTimer pausedTimer = this.mCountDownTimerList.get(this.mCurrentIndex);
     pausedTimer.cancel();
 
-    TimeInterval pausedInterval = HCRunningToolkit.getTimeInterval(this.mDisplayCountDownView);
+    TimeInterval pausedInterval = IntervalTrackerToolkit.getTimeInterval(this.mDisplayCountDownView);
     long totalInMilliSeconds = pausedInterval.toMilliseconds();
 
-    HCRunningCountDownTimer replacingTimer = new HCRunningCountDownTimer(totalInMilliSeconds, 50, mDisplayCountDownView, mContext, this);
+    IntervalTimer replacingTimer = new IntervalTimer(totalInMilliSeconds, 50, mDisplayCountDownView, mContext, this);
 
     this.mCountDownTimerList.set(this.mCurrentIndex, replacingTimer);
   }
 
   /**
-   * cancel() does three things:
-   * (1) stops the timer,
-   * (2) clears the list of count down timer, and
-   * (3) resets the text.
-   * If count down timer list is empty then resets text and returns without further operations.
+   * Clears all the intervals.
    */
   public void cancel() {
     if( this.mCountDownTimerList.isEmpty() ) {
@@ -135,7 +132,7 @@ public class IntervalProcessor implements HCRunningCountDownListener {
       return;
     }
 
-    HCRunningCountDownTimer timer = this.mCountDownTimerList.get(this.mCurrentIndex);
+    IntervalTimer timer = this.mCountDownTimerList.get(this.mCurrentIndex);
     timer.cancel();
 
     this.mCountDownTimerList.clear();
@@ -145,27 +142,29 @@ public class IntervalProcessor implements HCRunningCountDownListener {
   }
 
   /**
-   * onIntervalFinished() does two things:
-   * (1) increments current index; if current index reaches to the end of the list of count down timer,
-   *     then this function clears the list and returns without further operations
-   * (2) sets the next interval and starts it
+   * Sets the next interval and starts whenever previous interval finishes.
    */
   public void onIntervalFinished() {
     this.mCurrentIndex++;
-    if( this.mCurrentIndex == this.mCountDownTimerList.size() ) {
+
+    // copying current index into next interval index for readability within this method
+    int nextIntervalIndex = this.mCurrentIndex;
+    if( nextIntervalIndex == this.mCountDownTimerList.size() ) {
+      // Is the last one
       this.mCountDownTimerList.clear();
       this.mDisplayCountDownView.setText("Done!");
-      if( mIntervalCompleteListener != null ) {
-        this.mIntervalCompleteListener.onIntervalComplete(-1);
+
+      if( mIntervalProcessedListener != null ) {
+        this.mIntervalProcessedListener.onIntervalComplete(IntervalCompleteListener.INTERVAL_FINISHED);
       }
       return;
     }
 
-    if( mIntervalCompleteListener != null ) {
-      mIntervalCompleteListener.onIntervalComplete(this.mCurrentIndex);
+    if( mIntervalProcessedListener != null ) {
+      mIntervalProcessedListener.onIntervalComplete(nextIntervalIndex);
     }
 
-    HCRunningCountDownTimer nextTime = this.mCountDownTimerList.get(this.mCurrentIndex);
+    IntervalTimer nextTime = this.mCountDownTimerList.get(nextIntervalIndex);
     nextTime.start();
   }
 }

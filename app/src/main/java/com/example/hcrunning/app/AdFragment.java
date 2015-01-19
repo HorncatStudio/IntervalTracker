@@ -10,7 +10,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
 /**
- * Created by Angelina on 11/11/2014.
+ * Fragment which is responsible for displaying rectangular add int he app.
  */
 public class AdFragment extends Fragment {
 

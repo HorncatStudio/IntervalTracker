@@ -3,7 +3,7 @@ package com.example.hcrunning.app;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by Shinichi on 2014/07/26.
+ * An interval of time stored as Minutes and Seconds.
  */
 public class TimeInterval {
   /** Members */

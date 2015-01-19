@@ -13,9 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Shinichi on 2014/07/24.
+ * ArrayAdapter to display the intervals.
  */
-public class HCRunningArrayAdapter extends ArrayAdapter<TextView> {
+public class IntervalArrayAdapter extends ArrayAdapter<TextView> {
   private List<TimeInterval> mIntervals;
   private Activity mParentActivity;
   private int mHighlightedIndex = -1;
@@ -25,7 +25,7 @@ public class HCRunningArrayAdapter extends ArrayAdapter<TextView> {
    * @param context	A context to create the Views in
    * @param items	The actual objects we're representing
    */
-  public HCRunningArrayAdapter(Context context,  ArrayList<TextView> items, Activity activity) {
+  public IntervalArrayAdapter(Context context, ArrayList<TextView> items, Activity activity) {
     super(context, R.layout.row_layout_for_listview, items);
     mParentActivity = activity;
     mIntervals = new ArrayList<TimeInterval>();
@@ -57,15 +57,15 @@ public class HCRunningArrayAdapter extends ArrayAdapter<TextView> {
   }
 
 
-  /** Function for convenience */
+  /**
+   * Adds an interval to the adapter.
+   */
   public void add( long minutes, long seconds ) {
     this.add(new TimeInterval(minutes, seconds) );
   }
 
   /**
-   * This add() function does two things:
-   * (1) adds an interval to the list of TimeInterval,
-   * (2) puts the interval into textView and adds it to this adapter.
+   * Adds an interval to the adapter.
    */
   public void add( TimeInterval interval ) {
     mIntervals.add( interval );

@@ -6,16 +6,24 @@ import android.os.CountDownTimer;
 import android.widget.TextView;
 
 /**
- * Created by Shinichi on 2014/06/13.
+ * Interval timer process and count downs the interval provided.  At the end of an interval, a "ding" sound occurs.
  */
-public class HCRunningCountDownTimer extends CountDownTimer {
+public class IntervalTimer extends CountDownTimer {
+
+  /**
+   * An interface a class can implement and register with an interval timer to know when a countdown is complete.
+   */
+  public interface IntervalTimerListener {
+    public void onIntervalFinished();
+  }
+
   /** Members */
   private TextView mTimeTextView = null;
   private Context mContext = null;
-  private HCRunningCountDownListener mListener;
+  private IntervalTimerListener mListener;
 
   /** Constructor */
-  public HCRunningCountDownTimer(long millisInFuture, long countdownInterval, TextView timeTextView, Context context, HCRunningCountDownListener litener) {
+  public IntervalTimer(long millisInFuture, long countdownInterval, TextView timeTextView, Context context, IntervalTimerListener litener) {
     super(millisInFuture, countdownInterval);
     this.mTimeTextView = timeTextView;
     this.mContext = context;
@@ -37,8 +45,6 @@ public class HCRunningCountDownTimer extends CountDownTimer {
 
   @Override
   public void onFinish() {
-   // Going to move this to the interval processor class since it knows when the last one occurs
-   // this.mTimeTextView.setText("Done!");
     final MediaPlayer mPlayer = MediaPlayer.create(mContext, R.raw.coinsound);
     mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
       @Override

@@ -4,7 +4,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,7 +11,7 @@ import java.util.List;
  *
  * TODO: Need a better name for this class
  */
-public class SectionsPagerAdapter extends FragmentPagerAdapter{
+public class IntervalTrackerFragmentAdapter extends FragmentPagerAdapter{
 
   public static final CharSequence HOME_TITLE = "Home";
   public static final CharSequence CREATE_TITLE = "Create";
@@ -22,33 +21,33 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter{
   public static final int CREATE_INDEX = 1;
   public static final int RUN_INDEX = 2;
 
-  public SectionsPagerAdapter( FragmentManager fragmentManager )
+  public IntervalTrackerFragmentAdapter(FragmentManager fragmentManager)
   {
     super(fragmentManager);
   }
 
-  CreateFragment mCreateFragment = null;
-  RunFragment mRunFragment = null;
-  RtHomeFragment mHomeFragment = null;
+  CreateIntervalsFragment mCreateIntervalsFragment = null;
+  ItRunIntervalsFragment mItRunIntervalsFragment = null;
+  ItHomeFragment mHomeFragment = null;
 
   @Override
   public Fragment getItem(int i) {
     switch(i) {
         case HOME_INDEX:
           if( null == mHomeFragment) {
-            mHomeFragment = new RtHomeFragment();
+            mHomeFragment = new ItHomeFragment();
           }
           return mHomeFragment;
       case CREATE_INDEX:
-        if( null == mCreateFragment ) {
-          mCreateFragment = new CreateFragment();
+        if( null == mCreateIntervalsFragment) {
+          mCreateIntervalsFragment = new CreateIntervalsFragment();
         }
-        return mCreateFragment;
+        return mCreateIntervalsFragment;
       default:
-        if( null == mRunFragment ) {
-          mRunFragment = new RunFragment();
+        if( null == mItRunIntervalsFragment) {
+          mItRunIntervalsFragment = new ItRunIntervalsFragment();
         }
-        return mRunFragment;
+        return mItRunIntervalsFragment;
     }
   }
 
@@ -74,10 +73,10 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter{
 
   public void sendIntervalsToRun( final List<TimeInterval> intervals )
   {
-    if( mRunFragment == null)
+    if( mItRunIntervalsFragment == null )
       return;
 
-    this.mRunFragment.sendIntervals( intervals );
+    this.mItRunIntervalsFragment.sendIntervals( intervals );
   }
 
 }

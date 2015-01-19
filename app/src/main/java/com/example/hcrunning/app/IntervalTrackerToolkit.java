@@ -3,9 +3,9 @@ package com.example.hcrunning.app;
 import android.widget.TextView;
 
 /**
- * Created by Shinichi on 2014/08/06.
+ * Provides convenience methods for the app.
  */
-public class HCRunningToolkit {
+public class IntervalTrackerToolkit {
   public static TimeInterval getTimeInterval( TextView displayCountDownView ) {
     String pausedTime = displayCountDownView.getText().toString();
     String[] pausedSplitTime = pausedTime.split(":", 0);

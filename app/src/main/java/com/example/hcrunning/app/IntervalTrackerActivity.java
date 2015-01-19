@@ -5,21 +5,21 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import com.example.android.common.view.SlidingTabLayout;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class HcRunningActivity extends FragmentActivity implements RunIntervalsCreatedListener, CreateTimerListener {
+/**
+ * Main activity for the Interval Tracker app.
+ */
+public class IntervalTrackerActivity extends FragmentActivity implements RunIntervalsCreatedListener, CreateIntervalsListener {
 
   //! The sections pager responsible for going to the different sections of the app.
   //! \todo rename class
-  SectionsPagerAdapter mAppSectionsPagerAdapter;
+  IntervalTrackerFragmentAdapter mFragmentsAdapter;
 
-  /**
-   * Displays the main sections of the app one at a time.
-   */
+  //! Manages the fragments to determine which one is currently active in the app
   ViewPager mViewPager;
 
-
+  //! Tab layout manages the display of each of the fragments within the application
   SlidingTabLayout mSlidingTabLayout;
 
   @Override
@@ -27,10 +27,10 @@ public class HcRunningActivity extends FragmentActivity implements RunIntervalsC
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_hc_running);
 
-    mAppSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+    mFragmentsAdapter = new IntervalTrackerFragmentAdapter(getSupportFragmentManager());
 
     mViewPager = (ViewPager) findViewById(R.id.pager);
-    mViewPager.setAdapter(mAppSectionsPagerAdapter);
+    mViewPager.setAdapter(mFragmentsAdapter);
 
     mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
     mSlidingTabLayout.setViewPager(mViewPager);
@@ -39,12 +39,12 @@ public class HcRunningActivity extends FragmentActivity implements RunIntervalsC
 
   @Override
   public void onRunIntervalsCreated( List<TimeInterval> intervals) {
-    mAppSectionsPagerAdapter.sendIntervalsToRun(intervals);
-    mViewPager.setCurrentItem( mAppSectionsPagerAdapter.RUN_INDEX );
+    mFragmentsAdapter.sendIntervalsToRun(intervals);
+    mViewPager.setCurrentItem( mFragmentsAdapter.RUN_INDEX );
   }
 
   @Override
-  public void createATimer() {
-    mViewPager.setCurrentItem( mAppSectionsPagerAdapter.CREATE_INDEX );
+  public void displayCreateIntervals() {
+    mViewPager.setCurrentItem( mFragmentsAdapter.CREATE_INDEX );
   }
 }

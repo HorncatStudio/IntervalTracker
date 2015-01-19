@@ -16,24 +16,23 @@ import java.util.List;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * Responsible for processing the list of intervals to run.  Once each interval is completed in counting
+ * down in time, an audible "ding" occurs.
+ *
+ * {@link Fragment}
  */
-public class RunFragment extends Fragment implements View.OnClickListener, IntervalCompleteListener {
-  // TODO: Rename parameter arguments, choose names that match
+public class ItRunIntervalsFragment extends Fragment implements View.OnClickListener, IntervalProcessor.IntervalCompleteListener {
   // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
   private static final String INTERVAL_PARAMETER = "intervals";
 
   //! The text view that displays the current interval countdown time in the display
   private TextView mCurrentDisplayTimeTextView;
 
-  //! The interval processes that mangages the intervals being run
+  //! The interval processes that manages the intervals being run
   private IntervalProcessor mTimeProcessor;
 
-  //! List of intervals used within the interval processor
-  private List<TimeInterval> mIntervals;
-
   //! The adapter that manages the time intervals in the display for the list view
-  private HCRunningArrayAdapter mAdapter;
+  private IntervalArrayAdapter mAdapter;
 
   //! The list view that displays the intervals while the processor runs
   private ListView mListView;
@@ -47,9 +46,8 @@ public class RunFragment extends Fragment implements View.OnClickListener, Inter
    * @param intervals The list of intervals in milliseconds that the run fragment is to use for running
    * @return A new instance of fragment RunFragment.
    */
-  public static RunFragment newInstance( ArrayList<Integer> intervals )
-  {
-    RunFragment fragment = new RunFragment();
+  public static ItRunIntervalsFragment newInstance( ArrayList<Integer> intervals ) {
+    ItRunIntervalsFragment fragment = new ItRunIntervalsFragment();
     Bundle args = new Bundle();
     args.putIntegerArrayList(INTERVAL_PARAMETER, intervals);
     fragment.setArguments(args);
@@ -57,7 +55,7 @@ public class RunFragment extends Fragment implements View.OnClickListener, Inter
   }
 
 
-  public RunFragment() {
+  public ItRunIntervalsFragment() {
   }
 
   @Override
@@ -76,12 +74,11 @@ public class RunFragment extends Fragment implements View.OnClickListener, Inter
 
     this.mTimeProcessor = new IntervalProcessor( this.mCurrentDisplayTimeTextView, getActivity().getApplicationContext() );
     this.mTimeProcessor.registerIntervalCompleteListener( this );
-    mAdapter = new HCRunningArrayAdapter(getActivity().getApplicationContext(), new ArrayList<TextView>(), getActivity());
+    mAdapter = new IntervalArrayAdapter(getActivity().getApplicationContext(), new ArrayList<TextView>(), getActivity());
 
     if (getArguments() != null) {
       ArrayList<Integer> intervals = getArguments().getIntegerArrayList(INTERVAL_PARAMETER);
-      for(Integer interval: intervals)
-      {
+      for(Integer interval: intervals) {
         mAdapter.add( new TimeInterval(interval ));
       }
     }
@@ -110,35 +107,26 @@ public class RunFragment extends Fragment implements View.OnClickListener, Inter
 
   public void sendIntervals( List<TimeInterval> intervals )
   {
-    for(TimeInterval interval: intervals)
-    {
+    mAdapter.clear();
+    mAdapter.clearListItem();
+
+    for(TimeInterval interval: intervals) {
       mAdapter.add( interval );
     }
   }
 
   public void onStartAndCancelToggleButton(View view) {
   //! \todo Disabled adding once the clock started ticking.  Make it so they cannot change until it is stopped?
-  //  Button addButtonActivator = (Button) view.findViewById(R.id.addButton);
 
     boolean start = ((ToggleButton) view).isChecked();
     if (!start) {
       // Action when "Cancel" is pressed
       mPauseButton.setEnabled(false);
-   //   addButtonActivator.setEnabled(true);
       this.mTimeProcessor.stop();
-//        this.mAdapter.clear();
-//        this.mAdapter.notifyDataSetChanged();
-//        this.mIntervals.clear();         // or this.mAdapter.clearListItem();
     } else {
       // Action when "Start" is pressed
       mPauseButton.setEnabled(true);
-   //   addButtonActivator.setEnabled(false);
-        /* pull list of times to count down
-         * foreach one in the list set the time on the count down timer
-         * ding at end, then pull do next time
-         */
-      this.mIntervals = mAdapter.getTimes();
-      this.mTimeProcessor.setIntervals(mIntervals);
+      this.mTimeProcessor.setIntervals( mAdapter.getTimes() );
       this.mTimeProcessor.start();
     }
   }
@@ -157,10 +145,12 @@ public class RunFragment extends Fragment implements View.OnClickListener, Inter
 
   public void onResetButton(View view) {
     this.mTimeProcessor.cancel();
+
+    //! todo - Make this into one action
     this.mAdapter.clear();
     this.mAdapter.clearListItem();
+
     this.mAdapter.notifyDataSetChanged();
-    //this.mIntervals.clear();
   }
 
   @Override
@@ -178,7 +168,7 @@ public class RunFragment extends Fragment implements View.OnClickListener, Inter
     }
   }
 
-  public void onIntervalComplete( final int nextIntervalIndex ) {
+  public void onIntervalComplete(final int nextIntervalIndex) {
    this.mAdapter.setHighlighted(nextIntervalIndex);
   }
 
