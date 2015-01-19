@@ -1,4 +1,4 @@
-package com.example.hcrunning.app;
+package com.horncatstudio.intervaltracker.app;
 
 import android.content.Context;
 import android.media.MediaPlayer;

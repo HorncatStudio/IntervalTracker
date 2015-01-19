@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.android.common.view;
+package com.horncatstudio.android.common.view;
 
 import android.R;
 import android.content.Context;

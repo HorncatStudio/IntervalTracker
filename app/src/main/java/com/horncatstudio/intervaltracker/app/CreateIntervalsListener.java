@@ -1,4 +1,4 @@
-package com.example.hcrunning.app;
+package com.horncatstudio.intervaltracker.app;
 
 /**
  * A listener that can be utilized to command an activity to display the create intervals section of an app.

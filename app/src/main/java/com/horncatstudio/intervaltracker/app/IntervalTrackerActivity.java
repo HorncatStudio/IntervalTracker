@@ -1,9 +1,9 @@
-package com.example.hcrunning.app;
+package com.horncatstudio.intervaltracker.app;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import com.example.android.common.view.SlidingTabLayout;
+import com.horncatstudio.android.common.view.SlidingTabLayout;
 
 import java.util.List;
 
@@ -25,7 +25,7 @@ public class IntervalTrackerActivity extends FragmentActivity implements RunInte
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_hc_running);
+    setContentView(R.layout.activity_interval_tracker);
 
     mFragmentsAdapter = new IntervalTrackerFragmentAdapter(getSupportFragmentManager());
 

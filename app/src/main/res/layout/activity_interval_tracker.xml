@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    tools:context=".HCRunningActivity"
+    tools:context=".IntervalTrackerActivity"
     tools:ignore="MergeRootFrame" >
 
     <EditText
@@ -23,7 +23,7 @@
         android:textSize="@dimen/abc_text_size_large_material"
         android:inputType="none"/>
 
-    <com.example.android.common.view.SlidingTabLayout
+    <com.horncatstudio.android.common.view.SlidingTabLayout
         android:id="@+id/sliding_tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -38,7 +38,7 @@
 
     <fragment
         android:id="@+id/adFragment"
-        android:name="com.example.hcrunning.app.AdFragment"
+        android:name="com.horncatstudio.intervaltracker.app.AdFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true" />
