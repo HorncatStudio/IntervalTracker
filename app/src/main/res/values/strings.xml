@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">Interval Tracker</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_practice">PracticeActivity</string>
     <string name="action_settings">Settings</string>
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
-    <string name="app_title">Interval Tracker</string>
-    <string name="add_text">Add</string>
+    <string name="it_app_title">Interval Tracker</string>
+    <string name="it_add_text">Add</string>
     <string name="banner_ad_unit_id">ca-app-pub-3197679492994008/8405602172</string>
-
+    <string name="it_start_text">Start</string>
+    <string name="it_pause_text">Pause</string>
+    <string name="it_continue_text">Continue</string>
+    <string name="it_cancel_text">Cancel</string>
+    <string name="it_stop_text">Stop</string>
+    <string name="it_reset_text">Reset</string>
+    <string name="it_home_fragment_title_text">Home</string>
+    <string name="it_create_fragment_title_text">Create</string>
+    <string name="it_run_fragment_title_text">Run</string>
 </resources>

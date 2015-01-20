@@ -25,28 +25,28 @@
                 <ToggleButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Start"
+                    android:text="@string/it_start_text"
                     android:id="@+id/button_start"
                     android:layout_margin="10dp"
                     android:singleLine="false"
-                    android:textOn="Cancel"
-                    android:textOff="Start"
+                    android:textOn="@string/it_cancel_text"
+                    android:textOff="@string/it_start_text"
                     />
 
                 <ToggleButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Pause"
+                    android:text="@string/it_pause_text"
                     android:id="@+id/button_pause"
                     android:layout_margin="10dp"
-                    android:textOn="Continue"
-                    android:textOff="Pause"
+                    android:textOn="@string/it_continue_text"
+                    android:textOff="@string/it_pause_text"
                     android:enabled="false" />
 
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Reset"
+                    android:text="@string/it_reset_text"
                     android:id="@+id/button_reset"
                     android:layout_margin="10dp" />
             </TableRow>
@@ -57,7 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="1:00"
+            android:text="0:00"
             android:id="@+id/textview_curent_countdown"
             android:layout_gravity="center|top"
             android:textSize="@dimen/abc_action_bar_stacked_max_height"
@@ -65,7 +65,7 @@
 
         <ListView
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:id="@+id/listview_countdown_display"
             android:layout_weight="1"/>
 
