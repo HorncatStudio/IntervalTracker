@@ -2,6 +2,7 @@ package com.horncatstudio.intervaltracker.app;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -68,7 +69,7 @@ public class CreateIntervalsFragment extends Fragment implements View.OnClickLis
       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         TextView oldValue = mAdapter.getItem(position);
 
-        updateFromNumberPicker(oldValue, position);
+        createModifyDeleteDialog(oldValue,position);
       }
     });
 
@@ -162,6 +163,44 @@ public class CreateIntervalsFragment extends Fragment implements View.OnClickLis
     this.mAdapter.replace(position, newInterval);
   }
 
+  private void createModifyDeleteDialog(  final TextView textViewInterval, final int positionInAdapter ) {
+    final Dialog dialog = new Dialog(getActivity());
+    dialog.setTitle("Modify/Delete Interval?");
+    dialog.setContentView(R.layout.modifydelete_interval_dialog);
+
+    Button removeButton = (Button) dialog.findViewById(R.id.remove_interval_button);
+    Button modifyButton = (Button) dialog.findViewById(R.id.modify_interval_button);
+    Button cancelButton = (Button) dialog.findViewById(R.id.cancel_dialog_button);
+
+    removeButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        removeFromIntervals(textViewInterval,positionInAdapter);
+        dialog.dismiss();
+      }
+    });
+
+    modifyButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        updateFromNumberPicker(textViewInterval,positionInAdapter);
+        dialog.dismiss();
+      }
+    });
+
+    cancelButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        dialog.dismiss();
+      }
+    });
+      dialog.show();
+  }
+
+  private void removeFromIntervals( final TextView textViewToFemove, int positionInAdapter ) {
+    this.mAdapter.remove(textViewToFemove, positionInAdapter);
+  }
+
   private Dialog createNumberPickerDialog() {
     final Dialog dialog = new Dialog(getActivity());
     dialog.setTitle("Set Timer");
@@ -198,4 +237,5 @@ public class CreateIntervalsFragment extends Fragment implements View.OnClickLis
         break;
     }
   }
+
 }

@@ -75,6 +75,11 @@ public class IntervalArrayAdapter extends ArrayAdapter<TextView> {
     this.add(textView);
   }
 
+  public void remove( final TextView textViewToFemove, final int position ) {
+    this.remove(textViewToFemove);
+    this.mIntervals.remove(position);
+  }
+
   public void replace( int position, TimeInterval interval ) {
     TextView oldView = this.getItem(position);
     this.remove(oldView);

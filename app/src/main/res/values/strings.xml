@@ -14,4 +14,6 @@
     <string name="it_home_fragment_title_text">Home</string>
     <string name="it_create_fragment_title_text">Create</string>
     <string name="it_run_fragment_title_text">Run</string>
+    <string name="it_modify_text">Modify</string>
+    <string name="it_remove_text">Remove</string>
 </resources>
