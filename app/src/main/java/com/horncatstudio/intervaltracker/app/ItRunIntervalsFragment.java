@@ -1,6 +1,8 @@
 package com.horncatstudio.intervaltracker.app;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import java.util.ArrayList;
@@ -29,7 +32,7 @@ public class ItRunIntervalsFragment extends Fragment implements View.OnClickList
   private TextView mCurrentDisplayTimeTextView;
 
   //! The interval processes that manages the intervals being run
-  private IntervalProcessor mTimeProcessor;
+  private IntervalProcessor mTimeProcessor = null;
 
   //! The adapter that manages the time intervals in the display for the list view
   private IntervalArrayAdapter mAdapter;
@@ -37,7 +40,13 @@ public class ItRunIntervalsFragment extends Fragment implements View.OnClickList
   //! The list view that displays the intervals while the processor runs
   private ListView mListView;
 
-  private ToggleButton mPauseButton;
+  private ToggleButton mPauseContinueButton;
+  private ToggleButton mStartCancelButton;
+  private Button mClearButton;
+
+  enum ProcessAction {
+    START, CANCEL, PAUSE, CONTINUE, CLEAR, FINISHED
+  }
 
 
   /**
@@ -72,8 +81,6 @@ public class ItRunIntervalsFragment extends Fragment implements View.OnClickList
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    this.mTimeProcessor = new IntervalProcessor( this.mCurrentDisplayTimeTextView, getActivity().getApplicationContext() );
-    this.mTimeProcessor.registerIntervalCompleteListener( this );
     mAdapter = new IntervalArrayAdapter(getActivity().getApplicationContext(), new ArrayList<TextView>(), getActivity());
 
     if (getArguments() != null) {
@@ -86,21 +93,24 @@ public class ItRunIntervalsFragment extends Fragment implements View.OnClickList
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
     View view = inflater.inflate(R.layout.fragment_run, container, false);
     this.mCurrentDisplayTimeTextView = (TextView)view.findViewById(R.id.textview_curent_countdown);
-    this.mTimeProcessor.setCurrentTimeDisplay( this.mCurrentDisplayTimeTextView );
     this.mListView = (ListView)view.findViewById(R.id.listview_countdown_display);
     mListView.setAdapter(mAdapter);
 
-    ToggleButton startButton = (ToggleButton) view.findViewById(R.id.button_start);
-    startButton.setOnClickListener(this);
+    mStartCancelButton = (ToggleButton) view.findViewById(R.id.button_start);
+    mStartCancelButton.setOnClickListener(this);
 
-    mPauseButton = (ToggleButton) view.findViewById(R.id.button_pause);
-    mPauseButton.setOnClickListener(this);
+    mPauseContinueButton = (ToggleButton) view.findViewById(R.id.button_pause);
+    mPauseContinueButton.setOnClickListener(this);
 
-    Button resetButton = (Button) view.findViewById(R.id.button_reset);
-    resetButton.setOnClickListener(this);
+    mClearButton = (Button) view.findViewById(R.id.button_clear);
+    mClearButton.setOnClickListener(this);
+
+    // Creating after gui elements are initialized.  The processor relies on a text view in order to update it properly
+    //! future refactor - potential refactoring later to remove dependency
+    this.mTimeProcessor = new IntervalProcessor( this.mCurrentDisplayTimeTextView, getActivity().getApplicationContext() );
+    this.mTimeProcessor.registerIntervalCompleteListener( this );
 
     return view;
   }
@@ -113,6 +123,8 @@ public class ItRunIntervalsFragment extends Fragment implements View.OnClickList
     for(TimeInterval interval: intervals) {
       mAdapter.add( interval );
     }
+
+
   }
 
   public void onStartAndCancelToggleButton(View view) {
@@ -121,11 +133,20 @@ public class ItRunIntervalsFragment extends Fragment implements View.OnClickList
     boolean start = ((ToggleButton) view).isChecked();
     if (!start) {
       // Action when "Cancel" is pressed
-      mPauseButton.setEnabled(false);
+      mPauseContinueButton.setEnabled(false);
+      mPauseContinueButton.setChecked(false);
       this.mTimeProcessor.stop();
+      this.mAdapter.clearHighlight();
     } else {
       // Action when "Start" is pressed
-      mPauseButton.setEnabled(true);
+
+      if ( this.mAdapter.isEmpty() ) {
+        // Do no actions and reset button since there is nothing to start
+        this.mStartCancelButton.setChecked(false);
+        return;
+      }
+
+      mPauseContinueButton.setEnabled(true);
       this.mTimeProcessor.setIntervals( mAdapter.getTimes() );
       this.mTimeProcessor.start();
     }
@@ -143,14 +164,17 @@ public class ItRunIntervalsFragment extends Fragment implements View.OnClickList
   }
 
 
-  public void onResetButton(View view) {
-    this.mTimeProcessor.cancel();
+  public void onClearButton(View view) {
+    this.mTimeProcessor.cancelAndClear();
 
     //! todo - Make this into one action
     this.mAdapter.clear();
     this.mAdapter.clearListItem();
 
     this.mAdapter.notifyDataSetChanged();
+    this.mStartCancelButton.setChecked(false);
+    this.mPauseContinueButton.setChecked(false);
+    this.mPauseContinueButton.setEnabled(false);
   }
 
   @Override
@@ -162,14 +186,39 @@ public class ItRunIntervalsFragment extends Fragment implements View.OnClickList
       case R.id.button_pause:
         onPauseAndContinueToggleButton(v);
         break;
-      case R.id.button_reset:
-        onResetButton(v);
+      case R.id.button_clear:
+        onClearButton(v);
         break;
     }
   }
 
   public void onIntervalComplete(final int nextIntervalIndex) {
-   this.mAdapter.setHighlighted(nextIntervalIndex);
+    this.mAdapter.setHighlighted(nextIntervalIndex);
   }
 
+  public void onIntervalProcessingFinished() {
+    displayDoneDialog();
+    mPauseContinueButton.setEnabled(false);
+    mStartCancelButton.setChecked(false);
+    this.mAdapter.clearHighlight();
+  }
+
+  public void onFirstIntervalProcessing() {
+    this.mAdapter.setHighlighted(0);
+  }
+
+
+  private void displayDoneDialog() {
+    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+    builder.setCancelable(false)
+        .setMessage("DONE!")
+        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+      @Override
+      public void onClick(DialogInterface dialog, int which) {
+        dialog.dismiss();
+      }
+    });
+    AlertDialog dialog = builder.create();
+    dialog.show();
+  }
 }

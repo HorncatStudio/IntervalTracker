@@ -10,7 +10,7 @@
     <string name="it_continue_text">Continue</string>
     <string name="it_cancel_text">Cancel</string>
     <string name="it_stop_text">Stop</string>
-    <string name="it_reset_text">Reset</string>
+    <string name="it_clear_text">Clear</string>
     <string name="it_home_fragment_title_text">Home</string>
     <string name="it_create_fragment_title_text">Create</string>
     <string name="it_run_fragment_title_text">Run</string>

@@ -10,6 +10,7 @@ import android.widget.TextView;
  */
 public class IntervalTimer extends CountDownTimer {
 
+
   /**
    * An interface a class can implement and register with an interval timer to know when a countdown is complete.
    */
@@ -23,11 +24,11 @@ public class IntervalTimer extends CountDownTimer {
   private IntervalTimerListener mListener;
 
   /** Constructor */
-  public IntervalTimer(long millisInFuture, long countdownInterval, TextView timeTextView, Context context, IntervalTimerListener litener) {
+  public IntervalTimer(long millisInFuture, long countdownInterval, TextView timeTextView, Context context, IntervalTimerListener listener) {
     super(millisInFuture, countdownInterval);
     this.mTimeTextView = timeTextView;
     this.mContext = context;
-    this.mListener = litener;
+    this.mListener = listener;
   }
 
   public long getCurrentTimeInSeconds() {

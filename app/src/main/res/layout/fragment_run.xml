@@ -46,8 +46,8 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/it_reset_text"
-                    android:id="@+id/button_reset"
+                    android:text="@string/it_clear_text"
+                    android:id="@+id/button_clear"
                     android:layout_margin="10dp" />
             </TableRow>
 

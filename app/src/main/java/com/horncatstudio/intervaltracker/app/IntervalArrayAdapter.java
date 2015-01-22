@@ -18,7 +18,8 @@ import java.util.List;
 public class IntervalArrayAdapter extends ArrayAdapter<TextView> {
   private List<TimeInterval> mIntervals;
   private Activity mParentActivity;
-  private int mHighlightedIndex = -1;
+  private final int CLEAR_HIGHLIGHT_INDEX = -1;
+  private int mHighlightedIndex = CLEAR_HIGHLIGHT_INDEX;
 
   /**
    * Constructs this adapter
@@ -108,6 +109,11 @@ public class IntervalArrayAdapter extends ArrayAdapter<TextView> {
 
   public void setHighlighted( final int index ) {
     mHighlightedIndex = index;
+    this.notifyDataSetChanged();
+  }
+
+  public void clearHighlight() {
+    mHighlightedIndex = CLEAR_HIGHLIGHT_INDEX;
     this.notifyDataSetChanged();
   }
 
