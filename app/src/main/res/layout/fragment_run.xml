@@ -1,0 +1,74 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" tools:context="com.horncatstudio.intervaltracker.app.ItRunIntervalsFragment"
+    android:textAlignment="center">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:baselineAligned="false">
+
+        <TableLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center|center_horizontal"
+            android:stretchColumns="*"
+            android:weightSum="1">
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <ToggleButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/it_start_text"
+                    android:id="@+id/button_start"
+                    android:layout_margin="10dp"
+                    android:singleLine="false"
+                    android:textOn="@string/it_cancel_text"
+                    android:textOff="@string/it_start_text"
+                    />
+
+                <ToggleButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/it_pause_text"
+                    android:id="@+id/button_pause"
+                    android:layout_margin="10dp"
+                    android:textOn="@string/it_continue_text"
+                    android:textOff="@string/it_pause_text"
+                    android:enabled="false" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/it_clear_text"
+                    android:id="@+id/button_clear"
+                    android:layout_margin="10dp" />
+            </TableRow>
+
+        </TableLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="0:00"
+            android:id="@+id/textview_curent_countdown"
+            android:layout_gravity="center|top"
+            android:textSize="@dimen/abc_action_bar_stacked_max_height"
+            android:textStyle="bold" />
+
+        <ListView
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:id="@+id/listview_countdown_display"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+</FrameLayout>

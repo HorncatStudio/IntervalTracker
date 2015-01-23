@@ -1,30 +1,34 @@
-package com.example.hcrunning.app;
+package com.horncatstudio.intervaltracker.app;
 
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
- * Created by Shinichi on 2014/06/13.
+ * Interval timer process and count downs the interval provided.  At the end of an interval, a "ding" sound occurs.
  */
-public class HCRunningCountDownTimer extends CountDownTimer {
+public class IntervalTimer extends CountDownTimer {
+
+
+  /**
+   * An interface a class can implement and register with an interval timer to know when a countdown is complete.
+   */
+  public interface IntervalTimerListener {
+    public void onIntervalFinished();
+  }
+
   /** Members */
   private TextView mTimeTextView = null;
   private Context mContext = null;
-  //private List<TimeInterval> mIntervals;
-  private HCRunningCountDownListener mListener;
+  private IntervalTimerListener mListener;
 
   /** Constructor */
-  public HCRunningCountDownTimer(long millisInFuture, long countdownInterval, TextView timeTextView, Context context, HCRunningCountDownListener litener) {
+  public IntervalTimer(long millisInFuture, long countdownInterval, TextView timeTextView, Context context, IntervalTimerListener listener) {
     super(millisInFuture, countdownInterval);
     this.mTimeTextView = timeTextView;
     this.mContext = context;
-    this.mListener = litener;
-    //this.mIntervals = new ArrayList<TimeInterval>();
+    this.mListener = listener;
   }
 
   public long getCurrentTimeInSeconds() {
@@ -42,7 +46,6 @@ public class HCRunningCountDownTimer extends CountDownTimer {
 
   @Override
   public void onFinish() {
-    this.mTimeTextView.setText("Done!");
     final MediaPlayer mPlayer = MediaPlayer.create(mContext, R.raw.coinsound);
     mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
       @Override
@@ -61,9 +64,14 @@ public class HCRunningCountDownTimer extends CountDownTimer {
 
   @Override
   public void onTick(long millisUntilFinished) {
-    long minutesPart = millisUntilFinished / 1000 / 60;
-//    long secondsPart = (millisUntilFinished / 1000 % 60) + 1;
-    long secondsPart = millisUntilFinished / 1000 % 60;
-    this.mTimeTextView.setText(Long.toString(minutesPart) + ":" + Long.toString(secondsPart));
+    long minutesPart = (millisUntilFinished / 1000) / 60;
+    long secondsPart = (millisUntilFinished / 1000) % 60;
+
+    if(secondsPart < 10) {
+      this.mTimeTextView.setText(Long.toString(minutesPart) + ":0"  + Long.toString(secondsPart));
+    }
+    else {
+      this.mTimeTextView.setText(Long.toString(minutesPart) + ":" + Long.toString(secondsPart));
+    }
   }
 }
