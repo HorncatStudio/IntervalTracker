@@ -10,18 +10,38 @@
     tools:context=".IntervalTrackerActivity"
     tools:ignore="MergeRootFrame" >
 
-    <EditText
-        android:layout_width="fill_parent"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/it_app_title"
-        android:id="@+id/textView"
-        android:autoText="false"
         android:background="#ff35afff"
-        android:enabled="false"
-        android:textStyle="bold"
-        android:typeface="normal"
-        android:textSize="@dimen/abc_text_size_large_material"
-        android:inputType="none"/>
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView"
+            android:src="@drawable/ic_launcher"
+            android:background="#ff35afff"
+            android:contentDescription="@string/it_icon_text"
+            android:paddingRight="5dp"
+            android:paddingLeft="0dp"/>
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/it_app_title"
+            android:id="@+id/textView"
+            android:autoText="false"
+            android:background="#ff35afff"
+            android:enabled="false"
+            android:textStyle="bold"
+            android:typeface="normal"
+            android:textSize="@dimen/abc_text_size_headline_material"
+            android:inputType="none"
+            android:layout_weight="0.02"
+            android:layout_gravity="center"/>
+    </LinearLayout>
 
     <com.horncatstudio.android.common.view.SlidingTabLayout
         android:id="@+id/sliding_tabs"

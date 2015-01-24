@@ -32,6 +32,9 @@ public class CreateIntervalsFragment extends Fragment implements View.OnClickLis
   //! The list view that displays the intervals for creation
   private ListView mListView;
 
+  private Button mAddButton = null;
+  private Button mStartTrainingButton = null;
+
   /** Must be empty.  First method called after creating the fragment is onAttach() */
   public CreateIntervalsFragment() {}
 
@@ -73,12 +76,22 @@ public class CreateIntervalsFragment extends Fragment implements View.OnClickLis
       }
     });
 
-    Button addButton = (Button) view.findViewById(R.id.add_button);
-    addButton.setOnClickListener(this);
+    mAddButton = (Button) view.findViewById(R.id.add_button);
+    mAddButton.setOnClickListener(this);
 
-    Button runButton = (Button) view.findViewById(R.id.run_button);
-    runButton.setOnClickListener(this);
+    mStartTrainingButton = (Button) view.findViewById(R.id.run_button);
+    mStartTrainingButton.setOnClickListener(this);
     return view;
+  }
+
+  public void setEditingEnabled( final boolean enabled ) {
+    if( null == mAddButton ||
+        null == mStartTrainingButton ) {
+      return;
+    }
+
+    mAddButton.setEnabled(enabled);
+    mStartTrainingButton.setEnabled(enabled);
   }
 
   public void onAddButton(View view){
