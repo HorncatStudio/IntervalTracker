@@ -61,12 +61,15 @@ public class IntervalTrackerFragmentAdapter extends FragmentPagerAdapter{
     }
   }
 
-  public void sendIntervalsToRun( final List<TimeInterval> intervals )
-  {
+  public void sendIntervalsToRun( final List<TimeInterval> intervals ) {
     if( mItRunIntervalsFragment == null )
       return;
 
     this.mItRunIntervalsFragment.sendIntervals( intervals );
+  }
+
+  public void setEditingEnabled( final boolean enabled ) {
+    mCreateIntervalsFragment.setEditingEnabled(enabled);
   }
 
 }

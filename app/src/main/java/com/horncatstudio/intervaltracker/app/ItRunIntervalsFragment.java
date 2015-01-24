@@ -10,6 +10,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.test.InstrumentationTestRunner;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,11 +51,12 @@ public class ItRunIntervalsFragment extends Fragment implements View.OnClickList
   private ToggleButton mStartCancelButton;
   private Button mClearButton;
 
-  enum ProcessAction {
-    START, CANCEL, PAUSE, CONTINUE, CLEAR, FINISHED
+  public interface IntervalTrainingStateListener {
+    public void onStartIntervalTraining();
+    public void onStopIntervalTraining();
   }
 
-
+  private IntervalTrainingStateListener mIntervalTrainingStateListner = null;
 
 
   /**
@@ -77,6 +80,12 @@ public class ItRunIntervalsFragment extends Fragment implements View.OnClickList
   @Override
   public void onAttach(Activity activity) {
     super.onAttach(activity);
+
+    try {
+      mIntervalTrainingStateListner = (IntervalTrainingStateListener) activity;
+    } catch (ClassCastException e) {
+      Log.d("Warning", "Activity does not implement listener to handle training state.");
+    }
   }
 
   @Override
@@ -122,16 +131,14 @@ public class ItRunIntervalsFragment extends Fragment implements View.OnClickList
     return view;
   }
 
-  public void sendIntervals( List<TimeInterval> intervals )
-  {
+  public void sendIntervals( List<TimeInterval> intervals )  {
     mAdapter.clear();
     mAdapter.clearListItem();
+    mAdapter.clearHighlight();
 
     for(TimeInterval interval: intervals) {
       mAdapter.add( interval );
     }
-
-
   }
 
   public void onStartAndCancelToggleButton(View view) {
@@ -144,6 +151,8 @@ public class ItRunIntervalsFragment extends Fragment implements View.OnClickList
       mPauseContinueButton.setChecked(false);
       this.mTimeProcessor.stop();
       this.mAdapter.clearHighlight();
+      clearNotification();
+      mIntervalTrainingStateListner.onStopIntervalTraining();
     } else {
       // Action when "Start" is pressed
 
@@ -154,6 +163,7 @@ public class ItRunIntervalsFragment extends Fragment implements View.OnClickList
       }
 
       sendStartNotification();
+      mIntervalTrainingStateListner.onStartIntervalTraining();
 
       mPauseContinueButton.setEnabled(true);
       this.mTimeProcessor.setIntervals( mAdapter.getTimes() );
@@ -174,8 +184,7 @@ public class ItRunIntervalsFragment extends Fragment implements View.OnClickList
 
 
   public void onClearButton(View view) {
-    NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
-    notificationManager.cancelAll();
+    clearNotification();
     this.mTimeProcessor.cancelAndClear();
 
     //! todo - Make this into one action
@@ -186,6 +195,8 @@ public class ItRunIntervalsFragment extends Fragment implements View.OnClickList
     this.mStartCancelButton.setChecked(false);
     this.mPauseContinueButton.setChecked(false);
     this.mPauseContinueButton.setEnabled(false);
+
+    mIntervalTrainingStateListner.onStopIntervalTraining();
   }
 
   @Override
@@ -213,6 +224,7 @@ public class ItRunIntervalsFragment extends Fragment implements View.OnClickList
     mPauseContinueButton.setEnabled(false);
     mStartCancelButton.setChecked(false);
     this.mAdapter.clearHighlight();
+    mIntervalTrainingStateListner.onStopIntervalTraining();
   }
 
   public void onFirstIntervalProcessing() {
@@ -264,5 +276,11 @@ public class ItRunIntervalsFragment extends Fragment implements View.OnClickList
     NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
 
     notificationManager.notify(0, notification);
+  }
+
+  private void clearNotification()
+  {
+    NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+    notificationManager.cancelAll();
   }
 }

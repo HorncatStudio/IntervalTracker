@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Main activity for the Interval Tracker app.
  */
-public class IntervalTrackerActivity extends FragmentActivity implements RunIntervalsCreatedListener {
+public class IntervalTrackerActivity extends FragmentActivity implements RunIntervalsCreatedListener, ItRunIntervalsFragment.IntervalTrainingStateListener {
 
   //! The sections pager responsible for going to the different sections of the app.
   //! \todo rename class
@@ -41,5 +41,15 @@ public class IntervalTrackerActivity extends FragmentActivity implements RunInte
   public void onRunIntervalsCreated( List<TimeInterval> intervals) {
     mFragmentsAdapter.sendIntervalsToRun(intervals);
     mViewPager.setCurrentItem( mFragmentsAdapter.RUN_INDEX );
+  }
+
+  @Override
+  public void onStartIntervalTraining() {
+    mFragmentsAdapter.setEditingEnabled(false);
+  }
+
+  @Override
+  public void onStopIntervalTraining() {
+    mFragmentsAdapter.setEditingEnabled(true);
   }
 }
