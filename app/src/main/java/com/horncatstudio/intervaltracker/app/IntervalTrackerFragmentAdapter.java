@@ -13,13 +13,11 @@ import java.util.List;
  */
 public class IntervalTrackerFragmentAdapter extends FragmentPagerAdapter{
 
-  public static final CharSequence HOME_TITLE = "Home";
   public static final CharSequence CREATE_TITLE = "Create";
   public static final CharSequence RUN_TITLE = "Run";
 
-  public static final int HOME_INDEX = 0;
-  public static final int CREATE_INDEX = 1;
-  public static final int RUN_INDEX = 2;
+  public static final int CREATE_INDEX = 0;
+  public static final int RUN_INDEX = 1;
 
   public IntervalTrackerFragmentAdapter(FragmentManager fragmentManager)
   {
@@ -28,16 +26,10 @@ public class IntervalTrackerFragmentAdapter extends FragmentPagerAdapter{
 
   CreateIntervalsFragment mCreateIntervalsFragment = null;
   ItRunIntervalsFragment mItRunIntervalsFragment = null;
-  ItHomeFragment mHomeFragment = null;
 
   @Override
   public Fragment getItem(int i) {
     switch(i) {
-        case HOME_INDEX:
-          if( null == mHomeFragment) {
-            mHomeFragment = new ItHomeFragment();
-          }
-          return mHomeFragment;
       case CREATE_INDEX:
         if( null == mCreateIntervalsFragment) {
           mCreateIntervalsFragment = new CreateIntervalsFragment();
@@ -53,15 +45,13 @@ public class IntervalTrackerFragmentAdapter extends FragmentPagerAdapter{
 
   @Override
   public int getCount() {
-    return 3;
+    return 2;
   }
 
   @Override
   public CharSequence getPageTitle( int index )
   {
     switch(index) {
-      case HOME_INDEX:
-        return HOME_TITLE;
       case CREATE_INDEX:
         return CREATE_TITLE;
       case RUN_INDEX:
