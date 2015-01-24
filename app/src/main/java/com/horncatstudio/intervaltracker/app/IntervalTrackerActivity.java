@@ -28,13 +28,14 @@ public class IntervalTrackerActivity extends FragmentActivity implements RunInte
     setContentView(R.layout.activity_interval_tracker);
 
     mFragmentsAdapter = new IntervalTrackerFragmentAdapter(getSupportFragmentManager());
+    mFragmentsAdapter.CREATE_TITLE = getText(R.string.it_create_fragment_title_text);
+    mFragmentsAdapter.RUN_TITLE = getText(R.string.it_run_fragment_title_text);
 
     mViewPager = (ViewPager) findViewById(R.id.pager);
     mViewPager.setAdapter(mFragmentsAdapter);
 
     mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
     mSlidingTabLayout.setViewPager(mViewPager);
-
   }
 
   @Override

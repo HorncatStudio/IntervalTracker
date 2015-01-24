@@ -17,4 +17,10 @@
     <string name="it_modify_text">Modify</string>
     <string name="it_remove_text">Remove</string>
     <string name="it_icon_text">icon</string>
+    <string name="it_start_training_text">Start Training</string>
+    <string name="it_set_text">Set</string>
+  　<string name="it_start_notfi_text">Interval Tracking Started</string>
+    <string name="it_finished_notfi_text">Interval Tracking Finished</string>
+    <string name="it_done_text">DONE!</string>
+    <string name="it_ok_text">OK</string>
 </resources>
