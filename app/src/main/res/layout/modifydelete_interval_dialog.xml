@@ -7,12 +7,16 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Remove or Modify selected Interval?"
+        android:layout_height="wrap_content"
+        android:text="@string/it_modifydelete_text_dialog"
         android:id="@+id/textView2"
-        android:layout_weight="0.07"
-        android:textAlignment="center"/>
+        android:textAlignment="center"
+        android:autoText="true"
+        android:elegantTextHeight="false"
+        android:textIsSelectable="false"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:gravity="center_horizontal" />
 
     <TableLayout
         android:layout_width="wrap_content"
@@ -45,6 +49,9 @@
                 android:id="@+id/cancel_dialog_button"
                 android:layout_margin="10dp"
                 />
+
         </TableRow>
+
     </TableLayout>
+
 </LinearLayout>

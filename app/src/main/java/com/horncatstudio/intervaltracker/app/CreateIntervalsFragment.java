@@ -177,8 +177,9 @@ public class CreateIntervalsFragment extends Fragment implements View.OnClickLis
   }
 
   private void createModifyDeleteDialog(  final TextView textViewInterval, final int positionInAdapter ) {
-    final Dialog dialog = new Dialog(getActivity());
-    dialog.setTitle("Modify/Delete Interval?");
+    Activity parent = getActivity();
+    final Dialog dialog = new Dialog(parent);
+    dialog.setTitle(parent.getText(R.string.it_modifydelete_title_dialog));
     dialog.setContentView(R.layout.modifydelete_interval_dialog);
 
     Button removeButton = (Button) dialog.findViewById(R.id.remove_interval_button);
