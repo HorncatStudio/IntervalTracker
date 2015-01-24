@@ -19,7 +19,7 @@
         <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Start Training"
+            android:text="@string/it_start_training_text"
             android:id="@+id/run_button"
             android:layout_weight="0"/>
 

@@ -1,20 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Interval Tracker</string>
-    <string name="action_settings">Settings</string>
-    <string name="it_app_title">Interval Tracker</string>
-    <string name="it_add_text">Add</string>
+    <string name="app_name">インターバルトラッカー</string>
+    <string name="action_settings">設定</string>
+    <string name="it_app_title">インターバルトラッカー</string>
+    <string name="it_add_text">インターバルの追加</string>
     <string name="banner_ad_unit_id">ca-app-pub-3197679492994008/8405602172</string>
-    <string name="it_start_text">Start</string>
-    <string name="it_pause_text">Pause</string>
-    <string name="it_continue_text">Continue</string>
-    <string name="it_cancel_text">Cancel</string>
+    <string name="it_start_text">開始</string>
+    <string name="it_pause_text">停止</string>
+    <string name="it_continue_text">再開</string>
+    <string name="it_cancel_text">中止</string>
     <string name="it_stop_text">Stop</string>
-    <string name="it_clear_text">Clear</string>
+    <string name="it_clear_text">削除</string>
     <string name="it_home_fragment_title_text">Home</string>
-    <string name="it_create_fragment_title_text">Create</string>
-    <string name="it_run_fragment_title_text">Run</string>
-    <string name="it_modify_text">Modify</string>
-    <string name="it_remove_text">Remove</string>
+    <string name="it_create_fragment_title_text">作成</string>
+    <string name="it_run_fragment_title_text">実行</string>
+    <string name="it_modify_text">修正</string>
+    <string name="it_remove_text">削除</string>
     <string name="it_icon_text">icon</string>
+    <string name="it_start_training_text">トレーニングを始める</string>
+    <string name="it_set_text">決定</string>
+    <string name="it_start_notfi_text">トラッキング開始</string>
+    <string name="it_finished_notfi_text">トラッキング終了</string>
+    <string name="it_done_text">完了!</string>
+    <string name="it_ok_text">OK</string>
 </resources>

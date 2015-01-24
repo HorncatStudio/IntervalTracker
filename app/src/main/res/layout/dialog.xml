@@ -57,14 +57,14 @@
                 android:id="@+id/buttonSet"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:text="Set"
+                android:text="@string/it_set_text"
                 android:onClick="onNumberPickerSetButton"/>
 
         <Button
                 android:id="@+id/buttonCancel"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:text="Cancel"
+                android:text="@string/it_cancel_text"
                 android:onClick="onNumberPickerCancelButton"/>
 
     </TableRow>

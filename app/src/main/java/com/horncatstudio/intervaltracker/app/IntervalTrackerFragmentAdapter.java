@@ -13,8 +13,8 @@ import java.util.List;
  */
 public class IntervalTrackerFragmentAdapter extends FragmentPagerAdapter{
 
-  public static final CharSequence CREATE_TITLE = "Create";
-  public static final CharSequence RUN_TITLE = "Run";
+  public static CharSequence CREATE_TITLE = "Create";
+  public static CharSequence RUN_TITLE = "Run";
 
   public static final int CREATE_INDEX = 0;
   public static final int RUN_INDEX = 1;

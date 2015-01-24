@@ -233,10 +233,11 @@ public class ItRunIntervalsFragment extends Fragment implements View.OnClickList
 
 
   private void displayDoneDialog() {
-    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+    Activity parent = this.getActivity();
+    AlertDialog.Builder builder = new AlertDialog.Builder(parent);
     builder.setCancelable(false)
-        .setMessage("DONE!")
-        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        .setMessage(parent.getText(R.string.it_done_text))
+        .setPositiveButton(parent.getText(R.string.it_ok_text), new DialogInterface.OnClickListener() {
       @Override
       public void onClick(DialogInterface dialog, int which) {
         dialog.dismiss();
@@ -248,32 +249,36 @@ public class ItRunIntervalsFragment extends Fragment implements View.OnClickList
 
   private void sendStartNotification()
   {
-    Intent intent = new Intent(this.getActivity(), IntervalTrackerActivity.class)
-          .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-    PendingIntent pendingIntent = PendingIntent.getActivity(this.getActivity(), 0, intent, 0);
+    Activity parent = this.getActivity();
 
-    Notification notification = new Notification.Builder(this.getActivity())
+    Intent intent = new Intent(parent, IntervalTrackerActivity.class)
+          .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+    PendingIntent pendingIntent = PendingIntent.getActivity(parent, 0, intent, 0);
+
+    Notification notification = new Notification.Builder(parent)
             .setContentTitle("IT!")
-            .setContentText("Interval Tracking Started")
+            .setContentText(parent.getText(R.string.it_start_notfi_text))
             .setContentIntent(pendingIntent)
             .setSmallIcon(R.drawable.ic_launcher).build();
-    NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+    NotificationManager notificationManager = (NotificationManager) parent.getSystemService(Context.NOTIFICATION_SERVICE);
 
     notificationManager.notify(0, notification);
   }
 
   private void sendFinishedNotification()
   {
-    Intent intent = new Intent(this.getActivity(), IntervalTrackerActivity.class)
-            .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-    PendingIntent pendingIntent = PendingIntent.getActivity(this.getActivity(), 0, intent, 0);
+    Activity parent = this.getActivity();
 
-    Notification notification = new Notification.Builder(this.getActivity())
+    Intent intent = new Intent(parent, IntervalTrackerActivity.class)
+            .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+    PendingIntent pendingIntent = PendingIntent.getActivity(parent, 0, intent, 0);
+
+    Notification notification = new Notification.Builder(parent)
             .setContentTitle("IT!")
-            .setContentText("Interval Tracking Finished")
+            .setContentText(parent.getText(R.string.it_finished_notfi_text))
             .setContentIntent(pendingIntent)
             .setSmallIcon(R.drawable.ic_launcher).build();
-    NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+    NotificationManager notificationManager = (NotificationManager) parent.getSystemService(Context.NOTIFICATION_SERVICE);
 
     notificationManager.notify(0, notification);
   }
