@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/IntervalTracker.iml" filepath="$PROJECT_DIR$/IntervalTracker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/IntervalTracker_unit-test.iml" filepath="$PROJECT_DIR$/IntervalTracker_unit-test.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/runTyme.iml" filepath="$PROJECT_DIR$/runTyme.iml" />
     </modules>
   </component>
 </project>
-
