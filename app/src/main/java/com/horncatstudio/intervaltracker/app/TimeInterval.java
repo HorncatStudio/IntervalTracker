@@ -14,7 +14,10 @@ public class TimeInterval {
   public TimeInterval( Integer milliseconds )
   {
     Minutes = TimeUnit.MILLISECONDS.toMinutes(milliseconds);
-    Seconds = TimeUnit.MILLISECONDS.toSeconds(milliseconds) - TimeUnit.MILLISECONDS.toSeconds(Minutes);
+
+    long inSeconds = TimeUnit.MILLISECONDS.toSeconds(milliseconds);
+    long minuteInSeconds = TimeUnit.MINUTES.toSeconds(Minutes);
+    Seconds = inSeconds - minuteInSeconds;
   }
 
 
@@ -36,7 +39,7 @@ public class TimeInterval {
 
   /**
    * Returns the current time in a total of milliseconds.
-   * @return
+   * @return time in seconds
    */
   public long toMilliseconds() {
     return ( (Minutes* 60) + Seconds ) * 1000;
